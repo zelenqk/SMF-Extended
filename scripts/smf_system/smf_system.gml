@@ -166,7 +166,6 @@ function smf_model_load_from_buffer(loadBuff, path = "", targetModel = new smf_m
 	//Load rig
 	buffer_seek(loadBuff, buffer_seek_start, rigPos);
 	var nodeNum = buffer_read(loadBuff, buffer_u32);
-	nodeNum = 0;
 	if (nodeNum > 0)
 	{
 		for (var i = 0; i < nodeNum; i ++)
@@ -203,7 +202,6 @@ function smf_model_load_from_buffer(loadBuff, path = "", targetModel = new smf_m
 	//Load animation
 	buffer_seek(loadBuff, buffer_seek_start, aniPos);
 	var animNum = buffer_read(loadBuff, buffer_u8);
-	animNum = 0;
 	var nodeList = model.rig.nodeList;
 	var poseDQ = array_create(nodeNum);
 	model.animations = array_create(animNum);
@@ -427,13 +425,13 @@ function smf_model_save(model, path, incTex)
 	var M = array_create(16);
 	
 	//Write node hierarchy
-	for (i = 0; i < nodeNum; i ++)
+	for (var i = 0; i < nodeNum; i ++)
 	{
 		node = nodeList[| i];
 		DQ = node[eAnimNode.WorldDQ];
-		for (k = 0; k < 8; k ++)
+		for (var j = 0; j < 8; j ++)
 		{
-			buffer_write(saveBuff, buffer_f32, DQ[k]);
+			buffer_write(saveBuff, buffer_f32, DQ[j]);
 		}
 		buffer_write(saveBuff, buffer_u32, node[eAnimNode.Parent]);
 		buffer_write(saveBuff, buffer_u8, node[eAnimNode.IsBone]);

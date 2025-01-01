@@ -68,6 +68,7 @@
     {"$GMIncludedFile":"","%Name":"Dwarf.smf","CopyToMask":-1,"filePath":"datafiles/SMF","name":"Dwarf.smf","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"Hammer.smf","CopyToMask":-1,"filePath":"datafiles/SMF","name":"Hammer.smf","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"Sphere.obj","CopyToMask":-1,"filePath":"datafiles/SMF","name":"Sphere.obj","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
+    {"$GMIncludedFile":"","%Name":"spider_TEST.smf","CopyToMask":-1,"filePath":"datafiles/SMF","name":"spider_TEST.smf","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"Spider.smf","CopyToMask":-1,"filePath":"datafiles/SMF","name":"Spider.smf","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"Van.smf","CopyToMask":-1,"filePath":"datafiles/SMF","name":"Van.smf","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
   ],
