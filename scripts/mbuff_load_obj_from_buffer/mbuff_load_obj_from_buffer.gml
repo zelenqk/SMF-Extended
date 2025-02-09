@@ -18,7 +18,7 @@ function mbuff_load_obj_from_buffer(buffer, path = "", load_textures = true) {
 	var usemtl = "None";
 	var mtlind = 0;
 	var materials = [];
-	var submodels = [];
+	var submodels = [[]];
 	var faces = [];
 	var mtlFname = "";
 	var face_verts = array_create(5);
