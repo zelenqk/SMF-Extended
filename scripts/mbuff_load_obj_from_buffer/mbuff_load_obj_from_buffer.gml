@@ -10,10 +10,13 @@ function mbuff_load_obj_from_buffer(buffer, path = "", load_textures = true) {
 		Script created by TheSnidr, 2019
 		www.thesnidr.com
 	*/
+	
 	var contents = buffer_read(buffer, buffer_text);
-	var lines = string_split(contents, "\n");
+	contents = string_replace_all(contents, "\r\n", "\n");
+	
+	var lines = string_split(contents, "\n", true);
 	var num = array_length(lines);
-
+		
 	//Create the necessary data structures
 	var usemtl = "None";
 	var mtlind = 0;
@@ -30,18 +33,15 @@ function mbuff_load_obj_from_buffer(buffer, path = "", load_textures = true) {
 	var T_num = 0;
 	
 	//Read .obj as text
-	for (var i = 0; i < num; ++i)
-	{
+	for (var i = 0; i < num; ++i){
 		//Remove the newline from the end of the string
-		var this_line = string_delete(lines[i], string_length(lines[i]), 1);
-		
+		var this_line = lines[i];
 		//Continue if the string is empty
 		if (this_line == "") continue;
 		
-		var tokens = string_split(this_line, " ");
+		var tokens = string_split(this_line, " ", true);
 		//Different types of information in the .obj starts with different headers
-		switch tokens[0]
-		{
+		switch (tokens[0]){
 			//Load vertex positions
 			case "v":
 				V[V_num ++] = [real(tokens[1]), real(tokens[2]), real(tokens[3])];
@@ -57,35 +57,27 @@ function mbuff_load_obj_from_buffer(buffer, path = "", load_textures = true) {
 			//Load faces
 			case "f":
 				var vert_num = array_length(tokens) - 1;
-				for (var j = 0; j < vert_num; ++j)
-				{
+				for (var j = 0; j < vert_num; ++j){
 					var info = tokens[j + 1];
-					var indices = string_split(info, "/");
+					var indices = string_split(info, "/", true);
 					var slashnum = string_count("/", info);
 					var doubleslashnum = string_count("//", info);
-					
-					if (slashnum == 2 && doubleslashnum == 0)
-					{	//If the vertex contains a position, texture coordinate and normal
+					//show_message(info + "\n" + string(indices) + "\n" + string(slashnum) + "\n" + string(doubleslashnum));
+				
+					if (slashnum == 2 && doubleslashnum == 0){													//If the vertex contains a position, texture coordinate and normal
 						face_verts[j] = [real(indices[0]) - 1, real(indices[2]) - 1, real(indices[1]) - 1];
-					}
-					else if (slashnum == 1)
-					{	//If the vertex contains a position and a texture coordinate
+					}else if (slashnum == 1){																	//If the vertex contains a position and a texture coordinate
 						face_verts[j] = [real(indices[0]) - 1, 0, real(indices[1]) - 1];
-					}
-					else if (slashnum == 0)
-					{	//If the vertex only contains a position
+					}else if (slashnum == 0){																	//If the vertex only contains a position
 						face_verts[j] = [real(indices[0]) - 1, 0, 0];
-					}
-					else if (doubleslashnum == 1)
-					{	//If the vertex contains a position and normal
+					}else if (doubleslashnum == 1){																//If the vertex contains a position and normal
 						face_verts[j] = [real(indices[0]) - 1, real(indices[2]) - 1, 0];
 					}
 				}
 				
 				//Add vertices in a triangle fan
 				var F = submodels[mtlind];
-				for (var j = 0; j <= vert_num - 3; ++j)
-				{
+				for (var j = 0; j <= vert_num - 3; ++j){
 					F[faces[mtlind] ++] = face_verts[0];
 					F[faces[mtlind] ++] = face_verts[j + 2];
 					F[faces[mtlind] ++] = face_verts[j + 1];
@@ -99,8 +91,8 @@ function mbuff_load_obj_from_buffer(buffer, path = "", load_textures = true) {
 			case "usemtl":
 				usemtl = tokens[1];
 				mtlind = array_get_index(materials, usemtl);
-				if (mtlind < 0)
-				{
+				
+				if (mtlind < 0){
 					mtlind = array_length(materials);
 					materials[mtlind] = usemtl;
 					submodels[mtlind] = array_create(num);
@@ -115,13 +107,13 @@ function mbuff_load_obj_from_buffer(buffer, path = "", load_textures = true) {
 	bytesPerVert = mBuffBytesPerVert;
 	modelNum = array_length(submodels);
 	mBuff = array_create(modelNum);
-	for (var m = 0; m < modelNum; m ++)
-	{
+	
+	for (var m = 0; m < modelNum; m ++){
 		var F = submodels[m];
 		vertNum = faces[m];
 		mBuff[m] = buffer_create(vertNum * bytesPerVert, buffer_fixed, 1);
-		for (var f = 0; f < vertNum; f ++)
-		{
+		
+		for (var f = 0; f < vertNum; f ++){
 			vnt = F[f];
 		
 			//Add the vertex to the model buffer
@@ -150,8 +142,7 @@ function mbuff_load_obj_from_buffer(buffer, path = "", load_textures = true) {
 
 	//Load MTL file
 	var texPack = [];
-	if load_textures
-	{
+	if load_textures{
 		var mtlPath = filename_path(path) + filename_name(mtlFname);
 		texPack = texpack_load_mtl(mtlPath, materials);
 	}
