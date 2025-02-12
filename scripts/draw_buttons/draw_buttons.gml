@@ -108,12 +108,10 @@ function draw_buttons() {
 		}
 		draw_sprite_ext(sprite_index, ind, x, y, 1, 1, 0, col, 1);
 	
-	
-		if (string_count("SUBMODEL", handle))
-		{
+		if (string_count("SUBMODEL", handle)){
 			texNum = array_length(texPack);
-			if (texNum > 0)
-			{
+			
+			if (texNum > 0){
 				var ind = real(string_delete(handle, 1, 8));
 				var spr = texPack[ind mod texNum];
 				if !sprite_exists(spr){continue;}
@@ -125,8 +123,7 @@ function draw_buttons() {
 		}
 	
 	
-		switch handle
-		{
+		switch (handle){
 			default: draw_text(x + 2, y + 2, drawText); break;
 			case "SELECTTEXTURE":
 				//Draw dropdown menu

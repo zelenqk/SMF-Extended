@@ -14,8 +14,7 @@ gpu_set_texfilter(true);
 
 //Model settings
 var model = -1;
-if edtSMFSel >= 0
-{
+if (edtSMFSel >= 0){
 	model = edtSMFArray[edtSMFSel];
 	var mBuff = model.mBuff;
 	var vBuff = model.vBuff;
@@ -30,13 +29,11 @@ if edtSMFSel >= 0
 	var rig = model.rig;
 }
 
-if drawGrid
-{
+if (drawGrid){
 	editor_draw_grid();
 }
 
-with obj_sphere
-{
+with (obj_sphere){
 	event_perform(ev_draw, 0);
 }
 

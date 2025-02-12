@@ -97,8 +97,7 @@ draw_text(5, windowH - string_height(str) - 5, str);
 draw_set_font(font_0);
 
 //Draw timeline
-if global.editMode == eTab.Animation
-{
+if (global.editMode == eTab.Animation){
 	animeditor_draw_timeline();
 }
 
@@ -106,14 +105,15 @@ if global.editMode == eTab.Animation
 _x = window_mouse_get_x();
 _y = window_mouse_get_y();
 tooltipHover = collision_point(_x, _y, oAnimEditButton, false, true);
-if tooltipHover != tooltipPrevHover{alarm[0] = 10 * game_get_speed(gamespeed_fps) / 30;}
-if tooltipHover != noone and alarm[0] < 0 and !editorScrollmenuActive
-{
+
+if (tooltipHover != tooltipPrevHover) alarm[0] = 10 * game_get_speed(gamespeed_fps) / 30;
+
+if (tooltipHover != noone and alarm[0] < 0 and !editorScrollmenuActive){
 	tooltip = tooltipHover.tooltip;
 	var w = string_width(tooltip);
 	_x = min(_x, display_get_gui_width() - w - 32);
-	if tooltip != ""
-	{
+	
+	if (tooltip != "") {
 		draw_set_halign(fa_left);
 		draw_set_valign(fa_top);
 		draw_set_color(c_white)

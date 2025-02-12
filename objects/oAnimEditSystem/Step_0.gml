@@ -57,36 +57,31 @@ if is_struct(model)
 	}
 }
 //If the mouse is over one of the 3D views
-if edtTmlMove && !mouse_check_button(mb_left)
-{
+if (edtTmlMove && !mouse_check_button(mb_left)){
 	edtTmlMove = false;
 }
-if editorScrollmenuActive
-{
+
+if (editorScrollmenuActive){
 	press_scroll_menu();
-}
-else if (mouseX > 0 and mouseY > 0 and mouseX < editWidth * 2 and mouseY < editHeight * 2 and !edtTmlMove)
-{
+}else if (mouseX > 0 and mouseY > 0 and mouseX < editWidth * 2 and mouseY < editHeight * 2 and !edtTmlMove){
 	mousePrevInd = mouseViewInd;
 	mouseViewInd = median(1, 4, 2 - (mouseX div editWidth) + 2 * (mouseY div editHeight));
 	move_camera();
 	perform_actions();
-}
-else
-{
+}else{
 	press_buttons();
 	animeditor_modify_timeline();
 }
 
 //Animate the model
-if (global.editMode == eTab.Animation && edtAnimPlay && is_struct(model))
-{
+if (global.editMode == eTab.Animation && edtAnimPlay && is_struct(model)){
 	var animInd = animArray[selAnim];;
 	edtAnimPlayTime = frac(edtAnimPlayTime + 1000 / (animInd.playTime * game_get_speed(gamespeed_fps)));
-	if !is_array(model.SampleStrip)
-	{
+	
+	if !is_array(model.SampleStrip){
 		model.SampleStrip = samplestrip_create(model.rig, animInd);
 	}
+	
 	samplestrip_update_sample(model.SampleStrip, edtAnimPlayTime, model.Sample, true);
 	sample_normalize(model.Sample);
 }

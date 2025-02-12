@@ -20,10 +20,10 @@ draw_set_halign(fa_middle);
 draw_set_valign(fa_top);
 xx = floor(screenWidth / 2);
 yy = floor((screenHeight / 2 + sHalfHeight) / 16) + 1;
-draw_text(xx, (yy++)*16, "SMF Model Tool version 0.9.999");
-draw_text(xx, (yy++)*16, "Made by Sindre Hauge Larsen");
-draw_text(xx, (yy++)*16, "Logo by Chris Goodwin");
-draw_text(xx, (yy++)*16, "Non-tiring debugging by Paweł Zagawa");
+draw_text(xx, (yy++) * 16, "SMF Model Tool version 1.1.1");
+draw_text(xx, (yy++) * 16, "Made by Sindre Hauge Larsen");
+draw_text(xx, (yy++) * 16, "Logo by Chris Goodwin");
+draw_text(xx, (yy++) * 16, "Non-tiring debugging by Paweł Zagawa");
 
 gpu_set_zwriteenable(true);
 gpu_set_ztestenable(true);
