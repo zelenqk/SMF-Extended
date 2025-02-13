@@ -18,7 +18,7 @@
   "name":"rmMapper",
   "parent":{
     "name":"rooms",
-    "path":"folders/SMF mapper/rooms.yy",
+    "path":"folders/SMF Mapper/rooms.yy",
   },
   "parentRoom":null,
   "physicsSettings":{

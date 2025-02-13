@@ -1,0 +1,1 @@
+delta = (delta_time / targetDelta) / 1000000;

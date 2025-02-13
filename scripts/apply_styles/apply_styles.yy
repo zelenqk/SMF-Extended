@@ -6,7 +6,7 @@
   "name":"apply_styles",
   "parent":{
     "name":"JUI",
-    "path":"folders/SMF mapper/JUI.yy",
+    "path":"folders/SMF Mapper/JUI.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

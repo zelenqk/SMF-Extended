@@ -6,7 +6,7 @@
   "name":"cameras_ext",
   "parent":{
     "name":"scripts",
-    "path":"folders/SMF mapper/scripts.yy",
+    "path":"folders/SMF Mapper/scripts.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

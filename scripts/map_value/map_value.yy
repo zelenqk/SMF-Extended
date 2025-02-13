@@ -6,7 +6,7 @@
   "name":"map_value",
   "parent":{
     "name":"util",
-    "path":"folders/SMF mapper/JUI/presets/util.yy",
+    "path":"folders/SMF Mapper/JUI/presets/util.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

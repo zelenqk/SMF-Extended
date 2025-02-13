@@ -6,7 +6,7 @@
   "name":"slider",
   "parent":{
     "name":"presets",
-    "path":"folders/SMF mapper/JUI/presets.yy",
+    "path":"folders/SMF Mapper/JUI/presets.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

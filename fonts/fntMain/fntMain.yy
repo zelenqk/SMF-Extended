@@ -120,7 +120,7 @@
   "name":"fntMain",
   "parent":{
     "name":"JUI",
-    "path":"folders/SMF mapper/JUI.yy",
+    "path":"folders/SMF Mapper/JUI.yy",
   },
   "pointRounding":0,
   "ranges":[
