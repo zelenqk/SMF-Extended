@@ -60,11 +60,11 @@ function draw_container(container, tx = 0, ty = 0){
 	if (is_method(container[$ "step"])) container.step();
 	
 	var childN = array_length(container.content) * container.drawContent;
-	var startx = container.tx;
-	var starty = container.ty;
+	var startx = container.tx + container.contentOffsetX;
+	var starty = container.ty + container.contentOffsetY;
 	
-	var cx = container.tx;
-	var cy = container.ty;
+	var cx = startx;
+	var cy = starty;
 	
 	for(var i = 0; i < childN; i++){
 		var subContainer = container.content[i];

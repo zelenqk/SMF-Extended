@@ -11,6 +11,7 @@
   "defaultScriptType":1,
   "Folders":[
     {"$GMFolder":"","%Name":"SMF Mapper","folderPath":"folders/SMF Mapper.yy","name":"SMF Mapper","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"styles","folderPath":"folders/SMF Mapper/styles.yy","name":"styles","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"JUI","folderPath":"folders/SMF Mapper/JUI.yy","name":"JUI","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"presets","folderPath":"folders/SMF Mapper/JUI/presets.yy","name":"presets","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"util","folderPath":"folders/SMF Mapper/JUI/presets/util.yy","name":"util","resourceType":"GMFolder","resourceVersion":"2.0",},
@@ -160,6 +161,7 @@
     {"id":{"name":"draw_container","path":"scripts/draw_container/draw_container.yy",},},
     {"id":{"name":"draw_model","path":"scripts/draw_model/draw_model.yy",},},
     {"id":{"name":"draw_scroll_menu","path":"scripts/draw_scroll_menu/draw_scroll_menu.yy",},},
+    {"id":{"name":"dropdown","path":"scripts/dropdown/dropdown.yy",},},
     {"id":{"name":"dual_quaternions","path":"scripts/dual_quaternions/dual_quaternions.yy",},},
     {"id":{"name":"editor_draw_grid","path":"scripts/editor_draw_grid/editor_draw_grid.yy",},},
     {"id":{"name":"editor_export_smf_v1","path":"scripts/editor_export_smf_v1/editor_export_smf_v1.yy",},},
@@ -174,6 +176,7 @@
     {"id":{"name":"jui_button","path":"scripts/jui_button/jui_button.yy",},},
     {"id":{"name":"load_model","path":"scripts/load_model/load_model.yy",},},
     {"id":{"name":"map_value","path":"scripts/map_value/map_value.yy",},},
+    {"id":{"name":"mapStyle","path":"scripts/mapStyle/mapStyle.yy",},},
     {"id":{"name":"matrices","path":"scripts/matrices/matrices.yy",},},
     {"id":{"name":"mbuff_add","path":"scripts/mbuff_add/mbuff_add.yy",},},
     {"id":{"name":"mbuff_autoskin","path":"scripts/mbuff_autoskin/mbuff_autoskin.yy",},},

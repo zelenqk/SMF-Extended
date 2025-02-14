@@ -43,6 +43,8 @@ baseContainer = {
 	"direction": row,
 	"offsetx": 0,
 	"offsety": 0,
+	"contentOffsetX": 0,
+	"contentOffsetY": 0,
 
 	//do not set these variables
 	"content": [],	//this is just an array of other elements/container you can use this one

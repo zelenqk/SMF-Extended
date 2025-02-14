@@ -10,6 +10,9 @@ function load_model(fname){
 	case ".smf":
 		model = smf_model_load(fname);
 		break;
+	case ".smfe":
+		model = smf_ext_model_load(fname);
+		break
 	case ".obj":
 		model = smf_model_load_obj(fname);
 		break;
