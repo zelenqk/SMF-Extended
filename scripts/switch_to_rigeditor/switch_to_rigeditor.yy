@@ -6,7 +6,7 @@
   "name":"switch_to_rigeditor",
   "parent":{
     "name":"Rigging",
-    "path":"folders/SMF Model Tool/Scripts/Rigging.yy",
+    "path":"folders/SMF Model Tool (VANILLA)/Scripts/Rigging.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

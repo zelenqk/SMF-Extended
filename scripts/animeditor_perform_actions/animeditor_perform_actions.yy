@@ -6,7 +6,7 @@
   "name":"animeditor_perform_actions",
   "parent":{
     "name":"Animation",
-    "path":"folders/SMF Model Tool/Scripts/Animation.yy",
+    "path":"folders/SMF Model Tool (VANILLA)/Scripts/Animation.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

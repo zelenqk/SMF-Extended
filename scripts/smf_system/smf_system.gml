@@ -51,6 +51,7 @@ function smf_model_load(path)
 
 		return model;
 	}
+	
 	smf_debug_message("smf_model_load could not load file " + string(path));
 	return -1;
 }
@@ -60,42 +61,21 @@ function smf_model_get_animation(model, name)
 	return model.get_animation(name);
 }
 
-function smf_model_load_from_buffer(loadBuff, path = "", targetModel = new smf_model()) 
-{
-	if (path != "")
-	{
-		var ext = string_lower(filename_ext(path))
-		if (ext == ".obj")
-		{
-			var buff = buffer_load(path);
-			if (buff < 0)
-			{
-				smf_debug_message("smf_model_load_from_buffer: The given buffer does not contain a valid OBJ model");
-			}
-			var obj = mbuff_load_obj_from_buffer(buff, path, true);
-			buffer_delete(buff);
-			mbuff_add(targetModel.mBuff, obj[0]);
-			texpack_add_texpack(targetModel.texPack, obj[1]);
-			targetModel.vBuff = vbuff_create_from_mbuff(targetModel.mBuff);
-			var modelNum = array_length(obj[0]);
-			var texNum = array_length(obj[1]);
-			smf_debug_message("smf_model_load_from_buffer: Successfully loaded OBJ model " + string(path) + ", containing " + string(modelNum) + " models and " + string(texNum) + " textures");
-			return targetModel;
-		}
-	}
-	
+function smf_model_load_from_buffer(loadBuff, path = "", targetModel = new smf_model()) {
 	buffer_seek(loadBuff, buffer_seek_start, 0);
 	var headerText = buffer_read(loadBuff, buffer_string);
 	switch(headerText){
 	case "SMF_v11_by_Snidr_and_Bart":
-	
+		//tag is valid continue
 		break;
 	case "SMF_EXTENDED":
 		var version = buffer_read(loadBuff, buffer_u8);
 		
 		if (version != global.SMFextVersion) show_debug_message("WARNING! SMF Extended model is version " + string(version) + " while SMF extended system is on version " + string(global.SMFextVersion) + " slight changes possible");
+		
 		break;
 	default:
+		//legacy smf format
 		var model = smf_model_load_v10_from_buffer(loadBuff, path, targetModel);
 		if (is_struct(model)) return model;
 		
@@ -115,8 +95,8 @@ function smf_model_load_from_buffer(loadBuff, path = "", targetModel = new smf_m
 	var texMap = ds_map_create();
 	buffer_seek(loadBuff, buffer_seek_start, texPos);
 	var texNum = buffer_read(loadBuff, buffer_u8);
-	if (texNum > 0)
-	{
+	
+	if (texNum > 0){
 		var s = surface_create(8, 8);
 		surface_set_target(s);
 		draw_clear(c_white);
@@ -160,7 +140,7 @@ function smf_model_load_from_buffer(loadBuff, path = "", targetModel = new smf_m
 	var model = targetModel;
 	model.mBuff = array_create(modelNum);
 	model.vBuff = array_create(modelNum);
-	model.texPack = array_create(modelNum, array_create(materials.lighting, -1));
+	model.texPack = array_create(modelNum, array_create(material.name, -1));
 	model.vis = array_create(modelNum);
 	model.subRigIndex = array_create(modelNum);
 	
@@ -177,23 +157,23 @@ function smf_model_load_from_buffer(loadBuff, path = "", targetModel = new smf_m
 		
 		var matName = buffer_read(loadBuff, buffer_string);
 		var texName = buffer_read(loadBuff, buffer_string);
-		model.texPack[m] = texMap[? texName] ?? -1;
+		model.texPack[m][material.diffuse] = texMap[? texName] ?? -1;
+		model.texPack[m][material.name] = matName;
 		model.vis[m] = buffer_read(loadBuff, buffer_u8);
 	}
+	
 	ds_map_destroy(texMap);
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//Load rig
 	buffer_seek(loadBuff, buffer_seek_start, rigPos);
 	var nodeNum = buffer_read(loadBuff, buffer_u32);
-	if (nodeNum > 0)
-	{
-		for (var i = 0; i < nodeNum; i ++)
-		{
+	
+	if (nodeNum > 0){
+		for (var i = 0; i < nodeNum; i ++){
 			//Load the node as a dual quaternion
 			var Q = array_create(8);
-			for (var j = 0; j < 8; j ++)
-			{
+			for (var j = 0; j < 8; j ++){
 				Q[j] = buffer_read(loadBuff, buffer_f32);
 			}
 			
@@ -228,8 +208,7 @@ function smf_model_load_from_buffer(loadBuff, path = "", targetModel = new smf_m
 	model.sampleStrips = array_create(animNum);
 	
 	//Loop through all the animations
-	for (var a = 0; a < animNum; a ++)
-	{
+	for (var a = 0; a < animNum; a ++){
 		//Read animation settings
 		var animName = buffer_read(loadBuff, buffer_string);
 		var anim = new smf_anim(animName);
@@ -250,25 +229,21 @@ function smf_model_load_from_buffer(loadBuff, path = "", targetModel = new smf_m
 		
 		//Loop through the keyframes of this animation
 		var frameNum = buffer_read(loadBuff, buffer_u32);
-		for (var f = 0; f < frameNum; f ++)
-		{
+		for (var f = 0; f < frameNum; f ++){
 			var frameTime = buffer_read(loadBuff, buffer_f32);
 			var keyframeInd = anim.keyframe_add(frameTime);
 			var keyframe = anim.keyframeGrid[# 1, keyframeInd];
 			
 			//Loop through the nodes of the rig
-			for (var i = 0; i < nodeNum; i ++)
-			{
+			for (var i = 0; i < nodeNum; i ++){
 				var node = nodeList[| i];
 				poseDQ[i] = array_create(8);
-				for (var l = 0; l < 8; l ++)
-				{
+				for (var l = 0; l < 8; l ++){
 					//Read the dual quaternion of this node
 					poseDQ[i][l] = buffer_read(loadBuff, buffer_f32);
 				}
 				
-				if (i == 0)
-				{
+				if (i == 0){
 					//The first node's keyframe DQ stores change in worldspace orientation
 					keyframe[@ 0] = smf_dq_multiply(node[eAnimNode.WorldDQConjugate], poseDQ[i], array_create(8));
 					continue;
@@ -285,8 +260,7 @@ function smf_model_load_from_buffer(loadBuff, path = "", targetModel = new smf_m
 	return model;
 }
 
-function smf_model_load_obj(path) 
-{
+function smf_model_load_obj(path){
 	if (!file_exists(path)){return -1;}
 	var model = new smf_model();
 	var buff = buffer_load(path);
@@ -339,7 +313,7 @@ function smf_model_save(model, path, incTex) {
 
 	////////////////////////////////////////////////////////////////////
 	//Create buffer and write header
-	var saveBuff = buffer_create(100, buffer_grow, 1);
+	var saveBuff = buffer_create(1, buffer_grow, 1);
 	buffer_write(saveBuff, buffer_string, "SMF_EXTENDED");
 	buffer_write(saveBuff, buffer_u8, global.SMFextVersion);
 	var texHeader = buffer_tell(saveBuff);	buffer_write(saveBuff, buffer_u32, 0); //Buffer position of the textures
@@ -369,8 +343,9 @@ function smf_model_save(model, path, incTex) {
 	var texBuff = buffer_create(1, buffer_fast, 1);
 	
 	for (var mat = 0; mat < (modelNum * incTex); mat ++){
+		buffer_write(saveBuff, buffer_string, texPack[mat][material.name]);
 		
-		for(var tex = 0; tex < material.transmission; tex++){
+		for(var tex = 0; tex < material.name; tex++){
 			var spr = texPack[mat][tex];
 			
 			if (spr == -1){	//texture is empty write 0 for width and continue
@@ -406,7 +381,7 @@ function smf_model_save(model, path, incTex) {
 	
 	//clean up
 	surface_free(s);
-	buffer_poke(saveBuff, texPos, buffer_u8, ds_map_size(writtenTexMap));
+	buffer_poke(saveBuff, texPos, buffer_u8, array_length(texPack));
 	ds_map_destroy(writtenTexMap);
 	buffer_delete(texBuff);
 	gpu_pop_state();

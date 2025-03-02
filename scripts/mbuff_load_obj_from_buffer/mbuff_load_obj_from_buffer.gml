@@ -99,8 +99,8 @@ function mbuff_load_obj_from_buffer(buffer, path = "", load_textures = true) {
 			case "usemtl":
 				usemtl = tokens[1];
 				mtlind = array_get_index(materials, usemtl);
-				if (mtlind < 0)
-				{
+				
+				if (mtlind < 0){
 					mtlind = array_length(materials);
 					materials[mtlind] = usemtl;
 					submodels[mtlind] = array_create(num);

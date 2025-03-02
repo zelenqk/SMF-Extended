@@ -26,7 +26,11 @@ function texpack_load_mtl(fname, materials) {
 		switch (string_lower(tokens[0])){
 		case "newmtl":		//find submodel's material index
 			currentMaterial = array_get_index(materials, tokens[1]);
-			if (currentMaterial == -1) currentMaterial = 0;
+			if (currentMaterial == -1){
+				currentMaterial = 0;
+			}
+			
+			texpack[currentMaterial][material.name] = tokens[1];
 			break;
 		case "map_kd":		//diffuse
 			texpack[currentMaterial][material.diffuse] = texpack_load_sprite(tokens[1]);
@@ -42,7 +46,6 @@ function texpack_load_mtl(fname, materials) {
 			texpack[currentMaterial][material.displacement] = texpack_load_sprite(tokens[1]);
 			break;
 		case "map_pr":		//roughness
-		case "map_ns":
 			texpack[currentMaterial][material.roughness] = texpack_load_sprite(tokens[1]);
 			break;
 		case "map_pm":		//metallic

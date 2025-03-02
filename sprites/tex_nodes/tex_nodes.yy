@@ -41,7 +41,7 @@
   "origin":0,
   "parent":{
     "name":"Sprites",
-    "path":"folders/SMF Model Tool/Sprites.yy",
+    "path":"folders/SMF Model Tool (VANILLA)/Sprites.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

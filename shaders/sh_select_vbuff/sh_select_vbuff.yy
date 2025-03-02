@@ -4,7 +4,7 @@
   "name":"sh_select_vbuff",
   "parent":{
     "name":"Model editor",
-    "path":"folders/SMF Model Tool/Shaders/Model editor.yy",
+    "path":"folders/SMF Model Tool (VANILLA)/Shaders/Model editor.yy",
   },
   "resourceType":"GMShader",
   "resourceVersion":"2.0",

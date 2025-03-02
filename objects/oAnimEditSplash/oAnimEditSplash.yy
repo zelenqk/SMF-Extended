@@ -11,7 +11,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"Objects",
-    "path":"folders/SMF Model Tool/Objects.yy",
+    "path":"folders/SMF Model Tool (VANILLA)/Objects.yy",
   },
   "parentObjectId":null,
   "persistent":false,

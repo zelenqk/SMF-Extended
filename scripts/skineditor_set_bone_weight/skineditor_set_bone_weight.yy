@@ -6,7 +6,7 @@
   "name":"skineditor_set_bone_weight",
   "parent":{
     "name":"Skinning",
-    "path":"folders/SMF Model Tool/Scripts/Skinning.yy",
+    "path":"folders/SMF Model Tool (VANILLA)/Scripts/Skinning.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

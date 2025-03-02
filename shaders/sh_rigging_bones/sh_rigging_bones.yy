@@ -4,7 +4,7 @@
   "name":"sh_rigging_bones",
   "parent":{
     "name":"Rigging",
-    "path":"folders/SMF Model Tool/Shaders/Rigging.yy",
+    "path":"folders/SMF Model Tool (VANILLA)/Shaders/Rigging.yy",
   },
   "resourceType":"GMShader",
   "resourceVersion":"2.0",

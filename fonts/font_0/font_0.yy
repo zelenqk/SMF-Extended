@@ -496,7 +496,7 @@
   "name":"font_0",
   "parent":{
     "name":"Fonts",
-    "path":"folders/SMF Model Tool/Fonts.yy",
+    "path":"folders/SMF Model Tool (VANILLA)/Fonts.yy",
   },
   "pointRounding":0,
   "ranges":[

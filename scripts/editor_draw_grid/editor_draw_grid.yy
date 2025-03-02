@@ -6,7 +6,7 @@
   "name":"editor_draw_grid",
   "parent":{
     "name":"Editor functionality",
-    "path":"folders/SMF Model Tool/Scripts/Editor functionality.yy",
+    "path":"folders/SMF Model Tool (VANILLA)/Scripts/Editor functionality.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

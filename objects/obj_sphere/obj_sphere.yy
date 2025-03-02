@@ -9,8 +9,8 @@
   "name":"obj_sphere",
   "overriddenProperties":[],
   "parent":{
-    "name":"SMF Model Tool",
-    "path":"folders/SMF Model Tool.yy",
+    "name":"SMF Model Tool (VANILLA)",
+    "path":"folders/SMF Model Tool (VANILLA).yy",
   },
   "parentObjectId":null,
   "persistent":false,

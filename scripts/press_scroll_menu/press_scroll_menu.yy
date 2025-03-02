@@ -6,7 +6,7 @@
   "name":"press_scroll_menu",
   "parent":{
     "name":"Common tools",
-    "path":"folders/SMF Model Tool/Scripts/Common tools.yy",
+    "path":"folders/SMF Model Tool (VANILLA)/Scripts/Common tools.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

@@ -4,7 +4,7 @@
   "name":"sh_grid",
   "parent":{
     "name":"Editor",
-    "path":"folders/SMF Model Tool/Shaders/Editor.yy",
+    "path":"folders/SMF Model Tool (VANILLA)/Shaders/Editor.yy",
   },
   "resourceType":"GMShader",
   "resourceVersion":"2.0",

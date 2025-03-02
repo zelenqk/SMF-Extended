@@ -4,7 +4,7 @@
   "name":"sh_skinning_select_bone",
   "parent":{
     "name":"Skinning",
-    "path":"folders/SMF Model Tool/Shaders/Skinning.yy",
+    "path":"folders/SMF Model Tool (VANILLA)/Shaders/Skinning.yy",
   },
   "resourceType":"GMShader",
   "resourceVersion":"2.0",

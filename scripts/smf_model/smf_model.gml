@@ -18,6 +18,9 @@ enum material{
 	//effects
 	sheen,
 	transmission,
+	
+	//material name
+	name,
 }
 
 function smf_model() constructor

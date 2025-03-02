@@ -4,7 +4,7 @@
   "name":"sh_anim_loop",
   "parent":{
     "name":"Animation",
-    "path":"folders/SMF Model Tool/Shaders/Animation.yy",
+    "path":"folders/SMF Model Tool (VANILLA)/Shaders/Animation.yy",
   },
   "resourceType":"GMShader",
   "resourceVersion":"2.0",

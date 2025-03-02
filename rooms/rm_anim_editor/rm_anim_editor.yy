@@ -17,8 +17,8 @@
   ],
   "name":"rm_anim_editor",
   "parent":{
-    "name":"SMF Model Tool",
-    "path":"folders/SMF Model Tool.yy",
+    "name":"SMF Model Tool (VANILLA)",
+    "path":"folders/SMF Model Tool (VANILLA).yy",
   },
   "parentRoom":null,
   "physicsSettings":{

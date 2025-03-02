@@ -6,7 +6,7 @@
   "name":"smf_read_rig_from_buffer",
   "parent":{
     "name":"Scripts",
-    "path":"folders/SMF Model Tool/Scripts.yy",
+    "path":"folders/SMF Model Tool (VANILLA)/Scripts.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",
