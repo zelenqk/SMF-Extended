@@ -40,6 +40,14 @@ function smf_model_load(path)
 
 		return model;
 	}
+	if (ext == ".smfe")
+	{
+		var loadBuff = buffer_load(path); 
+		var model = smf_model_load_from_buffer_ext(loadBuff, path);
+		buffer_delete(loadBuff);
+
+		return model;
+	}
 	smf_debug_message("smf_model_load could not load file " + string(path));
 	return -1;
 }
@@ -72,6 +80,7 @@ function smf_model_load_from_buffer(loadBuff, path = "", targetModel = new smf_m
 			return targetModel;
 		}
 	}
+	
 	buffer_seek(loadBuff, buffer_seek_start, 0);
 	var headerText = buffer_read(loadBuff, buffer_string);
 	if (headerText != "SMF_v11_by_Snidr_and_Bart")
@@ -140,11 +149,11 @@ function smf_model_load_from_buffer(loadBuff, path = "", targetModel = new smf_m
 	var model = targetModel;
 	model.mBuff = array_create(modelNum);
 	model.vBuff = array_create(modelNum);
-	model.texPack = array_create(modelNum);
+	model.texPack = array_create(modelNum, array_create(materials.lighting, -1));
 	model.vis = array_create(modelNum);
 	model.subRigIndex = array_create(modelNum);
-	for (var m = 0; m < modelNum; m ++)
-	{
+	
+	for (var m = 0; m < modelNum; m ++){
 		//Read vertex buffers
 		var size = buffer_read(loadBuff, buffer_u32);
 		var mBuff = buffer_create(size, buffer_fixed, 1);
@@ -224,8 +233,7 @@ function smf_model_load_from_buffer(loadBuff, path = "", targetModel = new smf_m
 		
 		//Read locked bones for this animation
 		var lockedBonesNum = buffer_read(loadBuff, buffer_u16);
-		for (var i = 0; i < lockedBonesNum; i ++)
-		{
+		for (var i = 0; i < lockedBonesNum; i ++){
 			anim.lockedBonesList[| i] = buffer_read(loadBuff, buffer_u16);
 		}
 		

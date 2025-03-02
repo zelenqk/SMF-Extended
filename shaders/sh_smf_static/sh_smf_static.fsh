@@ -2,7 +2,17 @@
 	SMF static fragment shader
 	This is the standard shader that comes with the SMF system.
 	This does some basic diffuse, specular and rim lighting.
+	
+	extended by zelenqk
+	the samplers also have their own uv's
 */////////////////////////////////////////////////////////////////////////
+
+sampler2D ao;
+sampler2D normal;
+sampler2D specular;
+sampler2D emmision;
+sampler2D roughness;
+
 varying vec2 v_vTexcoord;
 varying vec3 v_eyeVec;
 varying vec3 v_vNormal;

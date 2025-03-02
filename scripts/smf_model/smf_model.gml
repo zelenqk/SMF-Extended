@@ -1,5 +1,25 @@
-// Script assets have changed for v2.3.0 see
-// https://help.yoyogames.com/hc/en-us/articles/360005277377 for more information
+enum material{
+	//base maps
+	diffuse,
+	opacity,
+	emission,
+	
+	//surface details
+	normal,
+	displacement,
+	
+	//material properties
+	roughness,
+	metallic,
+	specular,
+	glossiness,
+	occlusion,
+	
+	//effects
+	sheen,
+	transmission,
+}
+
 function smf_model() constructor
 {
 	//Create SMF model container
@@ -7,6 +27,7 @@ function smf_model() constructor
 	vBuff = [];
 	vis = [];
 	texPack = [];
+	texCords = [];
 	rig = new smf_rig();
 	subRigs = [];
 	subRigIndex = [];
@@ -100,13 +121,13 @@ function smf_model() constructor
 						prevR = r;
 					}
 				}
-				var tex = -1;
-				if (t > 0)
-				{
-					var spr = texPack[i mod t];
-					tex = (spr >= 0) ? sprite_get_texture(spr, 0) : -1;
+				var tex = texPack[i mod t];
+				
+				for(var u = 1; u < 5; u++){
+					texture_set_stage(u, tex[u]);
 				}
-				vertex_submit(vBuff[i], pr_trianglelist, tex);
+				
+				vertex_submit(vBuff[i], pr_trianglelist, tex[diffuse]);
 			}
 		}
 	}

@@ -149,9 +149,8 @@ function mbuff_load_obj_from_buffer(buffer, path = "", load_textures = true) {
 	}
 
 	//Load MTL file
-	var texPack = [];
-	if load_textures
-	{
+	var texPack = array_create(submodels, array_create(material.transmission));
+	if (load_textures){
 		var mtlPath = filename_path(path) + filename_name(mtlFname);
 		texPack = texpack_load_mtl(mtlPath, materials);
 	}
