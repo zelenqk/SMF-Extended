@@ -15,6 +15,9 @@ global._SMFAsyncBuffer = buffer_create(1, buffer_grow, 1);
 global._SMFAsyncHandle = -1;
 global._SMFAsyncModel = -1;
 global._SMFAsyncText = "";
+
+global.SMFextVersion = 1;
+
 #macro SMFAsyncDebug true
 #macro SMFDebugEnable false
 	
@@ -88,14 +91,14 @@ function smf_model_load_from_buffer(loadBuff, path = "", targetModel = new smf_m
 	
 		break;
 	case "SMF_EXTENDED":
-	
+		var version = buffer_read(loadBuff, buffer_u8);
+		
+		if (version != global.SMFextVersion) show_debug_message("WARNING! SMF Extended model is version " + string(version) + " while SMF extended system is on version " + string(global.SMFextVersion) + " slight changes possible");
 		break;
 	default:
 		var model = smf_model_load_v10_from_buffer(loadBuff, path, targetModel);
-		if (is_struct(model))
-		{
-			return model;
-		}
+		if (is_struct(model)) return model;
+		
 		smf_debug_message("smf_model_load_from_buffer: The given buffer does not contain a valid SMF model");
 		return -1;
 		break;
@@ -144,6 +147,7 @@ function smf_model_load_from_buffer(loadBuff, path = "", targetModel = new smf_m
 			}
 			buffer_seek(loadBuff, buffer_seek_relative, w * h * 4);
 		}
+		
 		sprite_delete(blankSprite);
 		surface_free(s);
 		buffer_delete(texBuff);
@@ -321,8 +325,8 @@ function smf_model_partition_rig(model, bonesPerPart, extraBones)
 {
 	model.partition_rig(bonesPerPart, extraBones);
 }
-function smf_model_save(model, path, incTex) 
-{
+
+function smf_model_save(model, path, incTex) {
 	var mBuff = model.mBuff;
 	var texPack = model.texPack;
 	var vis = model.vis;
@@ -336,7 +340,8 @@ function smf_model_save(model, path, incTex)
 	////////////////////////////////////////////////////////////////////
 	//Create buffer and write header
 	var saveBuff = buffer_create(100, buffer_grow, 1);
-	buffer_write(saveBuff, buffer_string, "SMF_v11_by_Snidr_and_Bart");
+	buffer_write(saveBuff, buffer_string, "SMF_EXTENDED");
+	buffer_write(saveBuff, buffer_u8, global.SMFextVersion);
 	var texHeader = buffer_tell(saveBuff);	buffer_write(saveBuff, buffer_u32, 0); //Buffer position of the textures
 	var modHeader = buffer_tell(saveBuff);	buffer_write(saveBuff, buffer_u32, 0); //Buffer position of the models
 	var rigHeader = buffer_tell(saveBuff);	buffer_write(saveBuff, buffer_u32, 0); //Buffer position of the rig
@@ -355,65 +360,63 @@ function smf_model_save(model, path, incTex)
 	var texPos = buffer_tell(saveBuff);
 	buffer_poke(saveBuff, texHeader, buffer_u32, texPos); //Save a pointer to the buffer position of the textures to the header of the file
 	buffer_write(saveBuff, buffer_u8, 0); //Number of textures, this will be overwritten later
+
 	//Write the used textures
 	var writtenTexMap = ds_map_create();
 	var n = array_length(mBuff);
 	gpu_set_blendmode_ext(bm_one, bm_zero);
 	var s = surface_create(1, 1);
 	var texBuff = buffer_create(1, buffer_fast, 1);
-	for (var t = 0; t < modelNum; t ++)
-	{
-		var tex = texPack[t];
-		if (!is_undefined(writtenTexMap[? tex])){continue;}
-		writtenTexMap[? tex] = true;
-		buffer_write(saveBuff, buffer_string, string(tex));
-		if incTex
-		{
-			var w = sprite_get_width(tex);
-			var h = sprite_get_height(tex);
+	
+	for (var mat = 0; mat < (modelNum * incTex); mat ++){
+		
+		for(var tex = 0; tex < material.transmission; tex++){
+			var spr = texPack[mat][tex];
+			
+			if (spr == -1){	//texture is empty write 0 for width and continue
+				buffer_write(saveBuff, buffer_u16, 0);
+				continue;
+			}
+			
+			//prepare surface
+			var w = sprite_get_width(spr);
+			var h = sprite_get_height(spr);
 			surface_resize(s, w, h);
+			
+			//draw texture to surface
 			surface_set_target(s);
 			draw_clear_alpha(c_white, 0);
 			draw_sprite_ext(tex, 0, 0, 0, 1, 1, 0, c_white, 1);
 			surface_reset_target();
+			
+			//write surface to texture buffer
 			buffer_resize(texBuff, w * h * 4);
 			buffer_get_surface(texBuff, s, 0);
-		
+			
+			//write texture data to save buffer
 			buffer_write(saveBuff, buffer_u16, w);
 			buffer_write(saveBuff, buffer_u16, h);
+			buffer_write(saveBuff, buffer_u8, tex);
+			
+			//write texture buffer to save buffer
 			buffer_copy(texBuff, 0, w * h * 4, saveBuff, buffer_tell(saveBuff));
 			buffer_seek(saveBuff, buffer_seek_relative, w * h * 4);
 		}
-		else
-		{
-			buffer_write(saveBuff, buffer_u16, 0);
-			buffer_write(saveBuff, buffer_u16, 0);
-		}
 	}
+	
+	//clean up
 	surface_free(s);
 	buffer_poke(saveBuff, texPos, buffer_u8, ds_map_size(writtenTexMap));
 	ds_map_destroy(writtenTexMap);
 	buffer_delete(texBuff);
 	gpu_pop_state();
 
-	if (!incTex)
-	{
-		//Save textures
-		buffer_write(saveBuff, buffer_u8, 99);
-		var texNum = min(array_length(texPack), array_length(mBuff));
-		for (var i = 0; i < texNum; i ++)
-		{
-			sprite_save(texPack[i], 0, filename_change_ext(path, "_" + string(texPack[i]) + ".png"));
-		}
-	}
-
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//Write models
 	buffer_poke(saveBuff, modHeader, buffer_u32, buffer_tell(saveBuff));
 	buffer_write(saveBuff, buffer_u8, modelNum);
-	for (var m = 0; m < modelNum; m ++)
-	{
+	for (var m = 0; m < modelNum; m ++){
 		var size = buffer_get_size(mBuff[m]);
 		buffer_write(saveBuff, buffer_u32, size);
 		buffer_copy(mBuff[m], 0, size, saveBuff, buffer_tell(saveBuff));
