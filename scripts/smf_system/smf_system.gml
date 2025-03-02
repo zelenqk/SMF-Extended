@@ -83,8 +83,14 @@ function smf_model_load_from_buffer(loadBuff, path = "", targetModel = new smf_m
 	
 	buffer_seek(loadBuff, buffer_seek_start, 0);
 	var headerText = buffer_read(loadBuff, buffer_string);
-	if (headerText != "SMF_v11_by_Snidr_and_Bart")
-	{
+	switch(headerText){
+	case "SMF_v11_by_Snidr_and_Bart":
+	
+		break;
+	case "SMF_EXTENDED":
+	
+		break;
+	default:
 		var model = smf_model_load_v10_from_buffer(loadBuff, path, targetModel);
 		if (is_struct(model))
 		{
@@ -92,6 +98,7 @@ function smf_model_load_from_buffer(loadBuff, path = "", targetModel = new smf_m
 		}
 		smf_debug_message("smf_model_load_from_buffer: The given buffer does not contain a valid SMF model");
 		return -1;
+		break;
 	}
 	
 	//Load buffer positions

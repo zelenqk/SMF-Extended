@@ -29,39 +29,39 @@ function texpack_load_mtl(fname, materials) {
 			if (currentMaterial == -1) currentMaterial = 0;
 			break;
 		case "map_kd":		//diffuse
-			texpack[currentMaterial][material.diffuse] = zed_load_image(tokens[1]);
+			texpack[currentMaterial][material.diffuse] = texpack_load_sprite(tokens[1]);
 			break;
 		case "map_ke":		//emission
-			texpack[currentMaterial][material.emission] = zed_load_image(tokens[1]);
+			texpack[currentMaterial][material.emission] = texpack_load_sprite(tokens[1]);
 			break;
 		case "map_kn":		//normal
 		case "map_bump":
-			texpack[currentMaterial][material.normal] = zed_load_image(tokens[1]);
+			texpack[currentMaterial][material.normal] = texpack_load_sprite(tokens[1]);
 			break;
 		case "disp":		//displacement
-			texpack[currentMaterial][material.displacement] = zed_load_image(tokens[1]);
+			texpack[currentMaterial][material.displacement] = texpack_load_sprite(tokens[1]);
 			break;
 		case "map_pr":		//roughness
 		case "map_ns":
-			texpack[currentMaterial][material.roughness] = zed_load_image(tokens[1]);
+			texpack[currentMaterial][material.roughness] = texpack_load_sprite(tokens[1]);
 			break;
 		case "map_pm":		//metallic
-			texpack[currentMaterial][material.metallic] = zed_load_image(tokens[1]);
+			texpack[currentMaterial][material.metallic] = texpack_load_sprite(tokens[1]);
 			break;
 		case "map_ks":		//specular
-			texpack[currentMaterial][material.specular] = zed_load_image(tokens[1]);
+			texpack[currentMaterial][material.specular] = texpack_load_sprite(tokens[1]);
 			break;
 		case "map_ns":		//glossiness
-			texpack[currentMaterial][material.glossiness] = zed_load_image(tokens[1]);
+			texpack[currentMaterial][material.glossiness] = texpack_load_sprite(tokens[1]);
 			break;
 		case "map_ao":		//ambient occlusion
-			texpack[currentMaterial][material.occlusion] = zed_load_image(tokens[1]);
+			texpack[currentMaterial][material.occlusion] = texpack_load_sprite(tokens[1]);
 			break;
 		case "map_ps":		//ambient occlusion
-			texpack[currentMaterial][material.sheen] = zed_load_image(tokens[1]);
+			texpack[currentMaterial][material.sheen] = texpack_load_sprite(tokens[1]);
 			break;
 		case "map_tr":		//transmission
-			texpack[currentMaterial][material.transmission] = zed_load_image(tokens[1]);
+			texpack[currentMaterial][material.transmission] = texpack_load_sprite(tokens[1]);
 			break;
 		}
 	}

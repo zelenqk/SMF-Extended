@@ -27,6 +27,7 @@ function smf_model() constructor
 	vBuff = [];
 	vis = [];
 	texPack = [];
+	texPackPTR = [];
 	texCords = [];
 	rig = new smf_rig();
 	subRigs = [];
@@ -121,13 +122,13 @@ function smf_model() constructor
 						prevR = r;
 					}
 				}
-				var tex = texPack[i mod t];
+				var tex = texPackPTR[i mod t];
 				
 				for(var u = 1; u < 5; u++){
 					texture_set_stage(u, tex[u]);
 				}
 				
-				vertex_submit(vBuff[i], pr_trianglelist, tex[diffuse]);
+				vertex_submit(vBuff[i], pr_trianglelist, tex[material.diffuse]);
 			}
 		}
 	}
