@@ -6,8 +6,8 @@ function editor_sidebar() constructor{
 	background = c_dkgray;
 	
 	//prepare some presets
-	var scale = width / sprite_get_width(sToggle);
-	var toggleButton = new button(sprite_get_width(sToggle) * scale, sprite_get_height(sToggle) * scale, "Toggle ", fa_left);
+	var scale = (width / sprite_get_width(sToggle));
+	var toggleButton = new button(round(sprite_get_width(sToggle) * scale), round(sprite_get_height(sToggle) * scale), "Toggle ", fa_left);
 	toggleButton.textOffsetX += 6 * scale;
 	toggleButton.timer = 0;
 	toggleButton.font = fntMain;
