@@ -11,6 +11,7 @@
   "defaultScriptType":1,
   "Folders":[
     {"$GMFolder":"","%Name":"JUI","folderPath":"folders/JUI.yy","name":"JUI","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"presets","folderPath":"folders/JUI/presets.yy","name":"presets","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"util","folderPath":"folders/JUI/util.yy","name":"util","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"SMF Model Tool (EXTENDED)","folderPath":"folders/SMF Model Tool (EXTENDED).yy","name":"SMF Model Tool (EXTENDED)","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"SMF Model Tool (VANILLA)","folderPath":"folders/SMF Model Tool (VANILLA).yy","name":"SMF Model Tool (VANILLA)","resourceType":"GMFolder","resourceVersion":"2.0",},
@@ -196,6 +197,7 @@
     {"id":{"name":"modeleditor_press_buttons","path":"scripts/modeleditor_press_buttons/modeleditor_press_buttons.yy",},},
     {"id":{"name":"modeleditor_select_model","path":"scripts/modeleditor_select_model/modeleditor_select_model.yy",},},
     {"id":{"name":"modeleditor_update_wireframe","path":"scripts/modeleditor_update_wireframe/modeleditor_update_wireframe.yy",},},
+    {"id":{"name":"mouse_in_rectangle","path":"scripts/mouse_in_rectangle/mouse_in_rectangle.yy",},},
     {"id":{"name":"move_camera","path":"scripts/move_camera/move_camera.yy",},},
     {"id":{"name":"perform_actions","path":"scripts/perform_actions/perform_actions.yy",},},
     {"id":{"name":"press_buttons","path":"scripts/press_buttons/press_buttons.yy",},},
@@ -227,6 +229,7 @@
     {"id":{"name":"skineditor_set_bone_weight","path":"scripts/skineditor_set_bone_weight/skineditor_set_bone_weight.yy",},},
     {"id":{"name":"skineditor_update_tri_ind_model","path":"scripts/skineditor_update_tri_ind_model/skineditor_update_tri_ind_model.yy",},},
     {"id":{"name":"smf_anim","path":"scripts/smf_anim/smf_anim.yy",},},
+    {"id":{"name":"smf_button","path":"scripts/smf_button/smf_button.yy",},},
     {"id":{"name":"smf_instance","path":"scripts/smf_instance/smf_instance.yy",},},
     {"id":{"name":"smf_model_bake_animations","path":"scripts/smf_model_bake_animations/smf_model_bake_animations.yy",},},
     {"id":{"name":"smf_model","path":"scripts/smf_model/smf_model.yy",},},

@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"button",
+  "%Name":"smf_button",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"button",
+  "name":"smf_button",
   "parent":{
-    "name":"presets",
-    "path":"folders/JUI/presets.yy",
+    "name":"Button manager",
+    "path":"folders/SMF Model Tool (VANILLA)/Button manager.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

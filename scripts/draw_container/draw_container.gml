@@ -9,7 +9,7 @@ function draw_container(container, tx = 0, ty = 0){
 	container.tx = tx + container.offsetX;
 	container.ty = ty + container.offsetY;
 	
-	if (container.overflow == fa_hidden){
+	if (container.overflow == fa_hidden and hidden == false){
 		container.boundary = {
 			"x": container.tx,
 			"y": container.ty,
@@ -18,30 +18,46 @@ function draw_container(container, tx = 0, ty = 0){
 		}
 	}
 	
+	var blend = gpu_get_blendmode();
+	container.step();
+	
 	draw_set_alpha(container.transparency);
 	if (container.background >= 0) draw_rectangle_color(container.tx, container.ty, container.tx + container.width, container.ty + container.height, container.background, container.background, container.background, container.background, false);
 	draw_set_alpha(bAlpha);
 
-	container.step();
-	
 	var txtScale = (string_height(container.text) / container.fontSize);
 	
 	draw_text_transformed_color(container.tx + container.textOffsetX, container.ty + container.textOffsetY,
 								container.text, txtScale, txtScale, 0,
 								container.color, container.color, container.color, container.color, container.alpha);
 	
+	container.hover = mouse_in_rectangle(container.boundary.x, container.boundary.y,
+		container.boundary.x + container.boundary.width,
+		container.boundary.y + container.boundary.height,
+	) != noone;
+	
 	var startx = tx;
 	var starty = ty;
 	
 	var scissor = gpu_get_scissor();
 	if (container.overflow == fa_hidden){
-		gpu_set_scissor(container.bondary);	
+		if (container.hidden){
+			container.boundary.x = max(container.tx, container.boundary.x);
+			container.boundary.y = max(container.ty, container.boundary.y);
+			container.boundary.width = min(container.tx + container.twidth, container.boundary.x + container.boundary.width) - container.boundary.x;	
+			container.boundary.height = min(container.ty + container.theight, container.boundary.y + container.boundary.height) - container.boundary.y;
+		}
+		
+		gpu_set_scissor(container.boundary.x, container.boundary.y, container.boundary.width, container.boundary.height);
 	}
-	
+
 	tx = startx;
 	ty = starty;
 	
 	for(var i = 0; i < array_length(container.content); i++){
+		container.content[i].boundary = container.boundary;
+		container.content[i].hidden = (container.overflow == fa_hidden or container.hidden);
+		
 		var next = draw_container(container.content[i]);
 		
 		switch (container.direction){
@@ -53,6 +69,8 @@ function draw_container(container, tx = 0, ty = 0){
 			break;
 		}
 	}
+	
+	gpu_set_blendmode(blend);
 	
 	if (container.display == flex){
 		container.twidth = tx - startx;

@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"button",
+  "%Name":"mouse_in_rectangle",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"button",
+  "name":"mouse_in_rectangle",
   "parent":{
-    "name":"presets",
-    "path":"folders/JUI/presets.yy",
+    "name":"util",
+    "path":"folders/JUI/util.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",
