@@ -1,1 +1,12 @@
-testButton = new button(100, 32, "Press Me");
+main = {
+	"display": flex,
+	"direction": row,
+	"background": noone,
+}
+
+sidebar = new editor_sidebar();
+
+main.content = [
+	sidebar,
+]
+
