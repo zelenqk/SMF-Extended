@@ -5,7 +5,7 @@ function button(width, height, text, halign = fa_center, valign = fa_center) con
 	self.halign = halign;
 	self.valign = valign;
 	
-	fontSize = height - (height / 3);
+	fontSize = height - (height / 2.5);
 	
 	value = 0;
 	

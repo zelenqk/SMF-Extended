@@ -20,6 +20,7 @@
   "height":15,
   "HTile":false,
   "layers":[
+    {"$GMImageLayer":"","%Name":"c3886e85-1484-4460-8f11-9432522e19c6","blendMode":0,"displayName":"Layer 1","isLocked":false,"name":"c3886e85-1484-4460-8f11-9432522e19c6","opacity":24.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
     {"$GMImageLayer":"","%Name":"28f53a13-98af-4a0c-8237-c1a1957e9495","blendMode":0,"displayName":"default","isLocked":false,"name":"28f53a13-98af-4a0c-8237-c1a1957e9495","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
   ],
   "name":"sToggle",

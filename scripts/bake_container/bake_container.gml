@@ -94,8 +94,10 @@ resetFontEffects = {
 
 function bake_container(container){
 	
-	for(var i = 0; i < baseContainerNamesN; i++){
-		var name = baseContainerNames[i];
+	var containerNames = variable_struct_get_names(container);
+	
+	for(var i = 0; i < array_length(containerNames); i++){
+		var name = containerNames[i];
 		
 		switch (name){
 		case "marginH":
@@ -112,9 +114,11 @@ function bake_container(container){
 			container.marginLeft = container.margin;
 			container.marginRight = container.margin;
 			break;
-		default:
-			if (container[$ name] == undefined) container[$ name] = baseContainer[$ name];
-			break;
-		}
+		}	
+	}
+	
+	for(var i = 0; i < baseContainerNamesN; i++){
+		var name = baseContainerNames[i];
+		if (container[$ name] == undefined) container[$ name] = baseContainer[$ name];
 	}
 }

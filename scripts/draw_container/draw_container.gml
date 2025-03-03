@@ -36,27 +36,7 @@ function draw_container(container, tx = 0, ty = 0){
 
 	draw_set_alpha(container.transparency);
 	if (container.background > -1) draw_rectangle_color(container.tx, container.ty, container.tx + container.twidth - 1, container.ty + container.theight - 1, container.background, container.background, container.background, container.background, false);
-	draw_set_alpha(bAlpha);
-
-	draw_set_font(container.font);
-	if (container.font != -1) font_enable_effects(container.font, true, container.fontEffects);
-	container.step();
-
-	var txtScale = (container.fontSize / string_height(container.text));
-	var bhalign = draw_get_halign();
-	var bvalign = draw_get_valign();
 	
-	draw_set_halign(container.halign);
-	draw_set_valign(container.valign);
-	
-	draw_text_transformed_color(container.tx + container.textOffsetX, container.ty + container.textOffsetY,
-								container.text, txtScale, txtScale, 0,
-								container.color, container.color, container.color, container.color, container.alpha);
-	
-	draw_set_halign(bhalign);
-	draw_set_valign(bvalign);
-	if (container.font != -1) font_enable_effects(container.font, false, resetFontEffects);
-
 	var startx = tx;
 	var starty = ty;
 	
@@ -94,6 +74,27 @@ function draw_container(container, tx = 0, ty = 0){
 			break;
 		}
 	}
+		
+	draw_set_font(container.font);
+	container.step();
+	
+	draw_set_alpha(bAlpha);
+	if (container.font != -1) font_enable_effects(container.font, true, container.fontEffects);
+
+	var txtScale = (container.fontSize / string_height(container.text));
+	var bhalign = draw_get_halign();
+	var bvalign = draw_get_valign();
+	
+	draw_set_halign(container.halign);
+	draw_set_valign(container.valign);
+	
+	draw_text_transformed_color(container.tx + container.textOffsetX, container.ty + container.textOffsetY,
+								container.text, txtScale, txtScale, 0,
+								container.color, container.color, container.color, container.color, container.alpha);
+	
+	draw_set_halign(bhalign);
+	draw_set_valign(bvalign);
+	if (container.font != -1) font_enable_effects(container.font, false, resetFontEffects);
 	
 	container.twidth = max(container.twidth, tx - startx, string_width(container.text) * txtScale);
 	container.theight = max(container.theight, ty - starty, string_height(container.text) * txtScale);
