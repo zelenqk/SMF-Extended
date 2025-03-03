@@ -36,13 +36,14 @@ function editor_sidebar() constructor{
 	};
 	
 	var settingsHeader = {
-		"background": c_black,
+		"background": noone,
 		"text": "Settings",
 		"fontEffects": {
 			"outlineEnable": true,
 			"outlineDistance": 2,
 			"outlineColour": c_black	
 		},
+		"marginBottom": 3,
 		"fontSize": 32,
 		"font": fntMain,
 		"display": flex,
@@ -53,7 +54,8 @@ function editor_sidebar() constructor{
 	
 	settings = {
 		"display": flex,
-		"content": toggleSettings
+		"content": toggleSettings,
+		"background": c_black,
 	}
 	
 	content = [

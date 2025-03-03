@@ -25,6 +25,19 @@ baseContainer = {
 	"display": fixed,
 	"draw": true,
 	
+	//margin
+	"marginTop": 0,
+	"marginBottom": 0,
+	"marginLeft": 0,
+	"marginRight": 0,
+	
+	//max/min size
+	"maxWidth": infinity,
+	"maxHeight": infinity,
+	
+	"minHeight": -1,
+	"minWidth": -1,
+	
 	//flex
 	"theight": 0,
 	"twidth": 0,
@@ -84,6 +97,24 @@ function bake_container(container){
 	for(var i = 0; i < baseContainerNamesN; i++){
 		var name = baseContainerNames[i];
 		
-		if (container[$ name] == undefined) container[$ name] = baseContainer[$ name];
+		switch (name){
+		case "marginH":
+			container.marginLeft = container.marginH;
+			container.marginRight = container.marginH;
+			break;
+		case "marginV":
+			container.marginTop = container.marginV;
+			container.marginBottom = container.marginV;
+			break;
+		case "margin":
+			container.marginTop = container.margin;
+			container.marginBottom = container.margin;
+			container.marginLeft = container.margin;
+			container.marginRight = container.margin;
+			break;
+		default:
+			if (container[$ name] == undefined) container[$ name] = baseContainer[$ name];
+			break;
+		}
 	}
 }

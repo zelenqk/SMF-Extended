@@ -8,13 +8,20 @@ function draw_container(container, tx = 0, ty = 0){
 	
 	var bAlpha = draw_get_alpha();
 	
-	container.tx = tx + container.offsetX;
-	container.ty = ty + container.offsetY;
+	container.tx = tx + container.offsetX + container.marginLeft;
+	container.ty = ty + container.offsetY + container.marginTop;
 	
 	if (container.display != flex){
 		container.twidth = container.width;
 		container.theight = container.height;
 	}
+	
+	container.twidth = max(container.twidth, container.minWidth);
+	container.theight = max(container.theight, container.minHeight);
+	
+	container.twidth = min(container.twidth, container.maxWidth);
+	container.theight = min(container.theight, container.maxHeight);
+
 	
 	if (container.hidden == false){
 		container.boundary = {
@@ -30,7 +37,7 @@ function draw_container(container, tx = 0, ty = 0){
 	
 
 	draw_set_alpha(container.transparency);
-	if !(container.background < 0) draw_rectangle_color(container.tx, container.ty, container.tx + container.width - 1, container.ty + container.height - 1, container.background, container.background, container.background, container.background, false);
+	if !(container.background < 0) draw_rectangle_color(container.tx, container.ty, container.tx + container.twidth - 1, container.ty + container.theight - 1, container.background, container.background, container.background, container.background, false);
 	draw_set_alpha(bAlpha);
 
 	draw_set_font(container.font);
@@ -102,7 +109,7 @@ function draw_container(container, tx = 0, ty = 0){
 	draw_set_font(bFont);
 	
 	return {
-		"width": container.twidth,	
-		"height": container.theight,	
+		"width": container.twidth + container.marginLeft + container.marginRight,	
+		"height": container.theight + container.marginTop + container.marginBottom,	
 	}
 }
