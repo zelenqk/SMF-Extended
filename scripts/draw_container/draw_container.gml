@@ -26,13 +26,18 @@ function draw_container(container, tx = 0, ty = 0){
 	}
 	
 	var blend = gpu_get_blendmode();
+	var bFont = draw_get_font();
 	
+
 	draw_set_alpha(container.transparency);
 	if (container.background >= 0) draw_rectangle_color(container.tx, container.ty, container.tx + container.width - 1, container.ty + container.height - 1, container.background, container.background, container.background, container.background, false);
 	draw_set_alpha(bAlpha);
 
-	var txtScale = (string_height(container.text) / container.fontSize);
 	
+	draw_set_font(container.font);
+	container.step();
+
+	var txtScale = (container.fontSize / string_height(container.text));
 	var bhalign = draw_get_halign();
 	var bvalign = draw_get_valign();
 	
@@ -45,7 +50,8 @@ function draw_container(container, tx = 0, ty = 0){
 	
 	draw_set_halign(bhalign);
 	draw_set_valign(bvalign);
-	
+	draw_set_font(bFont);
+
 	var startx = tx;
 	var starty = ty;
 	
@@ -82,8 +88,6 @@ function draw_container(container, tx = 0, ty = 0){
 		}
 	}
 	
-	container.step();
-
 	gpu_set_blendmode(blend);
 	
 	if (container.display == flex){

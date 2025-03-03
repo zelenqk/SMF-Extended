@@ -5,7 +5,12 @@ function button(width, height, text, halign = fa_center, valign = fa_center) con
 	self.halign = halign;
 	self.valign = valign;
 	
+	fontSize = height - (height / 32);
+	
 	value = 0;
+	
+	textOffsetX = 0;
+	textOffsetY = 0;
 	
 	switch (halign){
 	case fa_center:
@@ -45,26 +50,18 @@ function button(width, height, text, halign = fa_center, valign = fa_center) con
 	}
 	
 	ifNot = function(){
-		if (previous != noone){
-			previous = json_parse(previous);
-			var names = variable_struct_get_names(previous);
-			
-			for(var i = 0; i < array_length(names); i++){
-				var name = names[i];
-				
-				self[$ name] = previous[$ name];
-			}
-			
-			previous = noone;
-		}
+
 	}
 	
 	step = function(){
 		if (hover){
-			if (previous = noone) previous = json_stringify(self);
 			onHover();
 			
-			if (mouse_check_button_pressed(mb_any)) onClick();
+			if (mouse_check_button_pressed(mb_any)){
+				value = !value;
+				onClick();
+			}
+			
 			if (mouse_check_button(mb_any)) onHold();
 		}else ifNot();
 		

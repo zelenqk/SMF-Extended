@@ -14,6 +14,7 @@
     {"$GMFolder":"","%Name":"presets","folderPath":"folders/JUI/presets.yy","name":"presets","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"util","folderPath":"folders/JUI/util.yy","name":"util","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"SMF Model Tool (EXTENDED)","folderPath":"folders/SMF Model Tool (EXTENDED).yy","name":"SMF Model Tool (EXTENDED)","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"Fonts","folderPath":"folders/SMF Model Tool (EXTENDED)/Fonts.yy","name":"Fonts","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"UI","folderPath":"folders/SMF Model Tool (EXTENDED)/UI.yy","name":"UI","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"SMF Model Tool (VANILLA)","folderPath":"folders/SMF Model Tool (VANILLA).yy","name":"SMF Model Tool (VANILLA)","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Button manager","folderPath":"folders/SMF Model Tool (VANILLA)/Button manager.yy","name":"Button manager","resourceType":"GMFolder","resourceVersion":"2.0",},
@@ -84,6 +85,7 @@
   },
   "name":"SMF",
   "resources":[
+    {"id":{"name":"fntMain","path":"fonts/fntMain/fntMain.yy",},},
     {"id":{"name":"font_0","path":"fonts/font_0/font_0.yy",},},
     {"id":{"name":"fontMessage","path":"fonts/fontMessage/fontMessage.yy",},},
     {"id":{"name":"fontSmall","path":"fonts/fontSmall/fontSmall.yy",},},

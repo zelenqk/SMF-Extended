@@ -10,7 +10,7 @@ function copy_style(style, n = 1){
 			var name = names[u];
 			var variable = style[$ name];
 			
-			if (is_callable(variable)){
+			if (is_method(variable)){
 				struct[$ name] = method(struct, variable);
 			}else{
 				struct[$ name] = variable;
