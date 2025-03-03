@@ -3,10 +3,16 @@ function button(width, height, text) constructor{
 	self.height = height;
 	self.text = text;
 	
+	textOffsetX = width / 2;
+	textOffsetY = height / 2;
+	
+	halign = fa_center;
+	valign = fa_center;
+	
 	background = c_black;
 	
 	onClick = function(){
-		
+		show_message("hui")
 	}
 	
 	onHold = function(){

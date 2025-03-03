@@ -23,12 +23,14 @@ baseContainer = {
 	"offsetX": 0,
 	"offsetY": 0,
 	"display": fixed,
+	"draw": true,
 	
 	//flex
 	"theight": 0,
 	"twidth": 0,
 	
 	//text properties
+	"alpha": 1,
 	"textOffsetX": 0,
 	"textOffsetY": 0,
 	"halign": fa_left,
@@ -49,15 +51,14 @@ baseContainer = {
 		"height": 0,
 	},
 	"hidden": false,
-	
 	"cookie": noone,
-
 	
 	//functionality properties
 	"hover": false,
 	"step": function(){
 		
 	},
+	"content": [],
 }
 
 baseContainerNames = variable_struct_get_names(baseContainer);

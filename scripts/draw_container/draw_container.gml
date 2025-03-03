@@ -6,10 +6,17 @@ function draw_container(container, tx = 0, ty = 0){
 		"height": 0,
 	}
 	
+	var bAlpha = draw_get_alpha();
+	
 	container.tx = tx + container.offsetX;
 	container.ty = ty + container.offsetY;
 	
-	if (container.overflow == fa_hidden and hidden == false){
+	if (container.display != flex){
+		container.twidth = container.width;
+		container.theight = container.height;
+	}
+	
+	if (container.hidden == false){
 		container.boundary = {
 			"x": container.tx,
 			"y": container.ty,
@@ -22,19 +29,23 @@ function draw_container(container, tx = 0, ty = 0){
 	container.step();
 	
 	draw_set_alpha(container.transparency);
-	if (container.background >= 0) draw_rectangle_color(container.tx, container.ty, container.tx + container.width, container.ty + container.height, container.background, container.background, container.background, container.background, false);
+	if (container.background >= 0) draw_rectangle_color(container.tx, container.ty, container.tx + container.width - 1, container.ty + container.height - 1, container.background, container.background, container.background, container.background, false);
 	draw_set_alpha(bAlpha);
 
 	var txtScale = (string_height(container.text) / container.fontSize);
+	
+	var bhalign = draw_get_halign();
+	var bvalign = draw_get_valign();
+	
+	draw_set_halign(container.halign);
+	draw_set_valign(container.valign);
 	
 	draw_text_transformed_color(container.tx + container.textOffsetX, container.ty + container.textOffsetY,
 								container.text, txtScale, txtScale, 0,
 								container.color, container.color, container.color, container.color, container.alpha);
 	
-	container.hover = mouse_in_rectangle(container.boundary.x, container.boundary.y,
-		container.boundary.x + container.boundary.width,
-		container.boundary.y + container.boundary.height,
-	) != noone;
+	draw_set_halign(bhalign);
+	draw_set_valign(bvalign);
 	
 	var startx = tx;
 	var starty = ty;
@@ -44,12 +55,14 @@ function draw_container(container, tx = 0, ty = 0){
 		if (container.hidden){
 			container.boundary.x = max(container.tx, container.boundary.x);
 			container.boundary.y = max(container.ty, container.boundary.y);
-			container.boundary.width = min(container.tx + container.twidth, container.boundary.x + container.boundary.width) - container.boundary.x;	
-			container.boundary.height = min(container.ty + container.theight, container.boundary.y + container.boundary.height) - container.boundary.y;
+			container.boundary.width = min(container.tx + container.twidth, container.boundary.x + container.boundary.width) - container.boundary.tx;	
+			container.boundary.height = min(container.ty + container.theight, container.boundary.y + container.boundary.height) - container.boundary.ty;
 		}
 		
 		gpu_set_scissor(container.boundary.x, container.boundary.y, container.boundary.width, container.boundary.height);
 	}
+	
+	container.hover = (mouse_in_rectangle(container.boundary.x, container.boundary.y, container.boundary.width, container.boundary.height));
 
 	tx = startx;
 	ty = starty;
