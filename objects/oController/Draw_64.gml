@@ -1,1 +1,1 @@
-draw_container(main, 200, 200);
+draw_container(main);

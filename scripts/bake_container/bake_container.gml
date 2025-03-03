@@ -10,7 +10,7 @@
 #macro column 0
 #macro row 1
 
-globalvar baseContainer, baseContainerNames, baseContainerNamesN;
+globalvar baseContainer, baseContainerNames, baseContainerNamesN, resetFontEffects;
 
 baseContainer = {
 	//container properties
@@ -63,6 +63,21 @@ baseContainer = {
 
 baseContainerNames = variable_struct_get_names(baseContainer);
 baseContainerNamesN = array_length(baseContainerNames);
+
+resetFontEffects = {
+	dropShadowEnable: false,
+	dropShadowSoftness: 0,
+	dropShadowOffsetX: 0,
+	dropShadowOffsetY: 0,
+	dropShadowAlpha: 0,
+	outlineEnable: 0,
+	outlineDistance: 0,
+	outlineColour: c_black,
+	glowEnable: 0,
+	glowEnd: 0,
+	glowColour: 0,
+	glowAlpha: 0
+}
 
 function bake_container(container){
 	

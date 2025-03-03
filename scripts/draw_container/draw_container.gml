@@ -30,11 +30,11 @@ function draw_container(container, tx = 0, ty = 0){
 	
 
 	draw_set_alpha(container.transparency);
-	if (container.background >= 0) draw_rectangle_color(container.tx, container.ty, container.tx + container.width - 1, container.ty + container.height - 1, container.background, container.background, container.background, container.background, false);
+	if !(container.background < 0) draw_rectangle_color(container.tx, container.ty, container.tx + container.width - 1, container.ty + container.height - 1, container.background, container.background, container.background, container.background, false);
 	draw_set_alpha(bAlpha);
 
-	
 	draw_set_font(container.font);
+	if (container.font != -1) font_enable_effects(container.font, true, container.fontEffects);
 	container.step();
 
 	var txtScale = (container.fontSize / string_height(container.text));
@@ -50,7 +50,7 @@ function draw_container(container, tx = 0, ty = 0){
 	
 	draw_set_halign(bhalign);
 	draw_set_valign(bvalign);
-	draw_set_font(bFont);
+	if (container.font != -1) font_enable_effects(container.font, false, resetFontEffects);
 
 	var startx = tx;
 	var starty = ty;
@@ -76,7 +76,7 @@ function draw_container(container, tx = 0, ty = 0){
 		container.content[i].boundary = container.boundary;
 		container.content[i].hidden = (container.overflow == fa_hidden or container.hidden);
 		
-		var next = draw_container(container.content[i]);
+		var next = draw_container(container.content[i], tx, ty);
 		
 		switch (container.direction){
 		case column:
@@ -93,9 +93,13 @@ function draw_container(container, tx = 0, ty = 0){
 	if (container.display == flex){
 		container.twidth = tx - startx;
 		container.theight = ty - starty;
+	
+		container.twidth = max(container.twidth, string_width(container.text) * txtScale);
+		container.theight = max(container.theight, string_height(container.text) * txtScale);
 	}
 	
 	gpu_set_scissor(scissor);
+	draw_set_font(bFont);
 	
 	return {
 		"width": container.twidth,	
