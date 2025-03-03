@@ -6,14 +6,15 @@ function editor_sidebar() constructor{
 	
 	//prepare some presets
 	var scale = width / sprite_get_width(sToggle);
-	var toggleButton = new button(width, sprite_get_height(sToggle) * scale, "test", fa_left);
+	var toggleButton = new button(width, sprite_get_height(sToggle) * scale, "Toggle ", fa_left);
 	toggleButton.onClick = function(){
 		
 	};
-	toggleButton.textOffsetX += 2 * scale;
+	toggleButton.textOffsetX += 6 * scale;
 	toggleButton.timer = 0;
 	toggleButton.font = fntMain;
 	toggleButton.background = noone;
+	toggleButton.marginBottom = 2;
 	toggleButton.description = "";
 	toggleButton.ifNot = function(){
 		transparency = 1;
@@ -35,6 +36,7 @@ function editor_sidebar() constructor{
 		draw_set_alpha(1);
 	};
 	
+	//create settings wrapper
 	var settingsHeader = {
 		"background": noone,
 		"text": "Settings",
@@ -43,6 +45,7 @@ function editor_sidebar() constructor{
 			"outlineDistance": 2,
 			"outlineColour": c_black	
 		},
+		"textOffsetX": 3,
 		"marginBottom": 3,
 		"fontSize": 32,
 		"font": fntMain,
@@ -50,15 +53,20 @@ function editor_sidebar() constructor{
 	}
 	
 	var toggleSettings = copy_style(toggleButton, 3);
+	toggleSettings[0].text += "wireframe";
+	toggleSettings[1].text += "culling";
+	toggleSettings[2].text += "shader";
+	
 	array_insert(toggleSettings, 0, settingsHeader);
 	
-	settings = {
+	settings = {	//settings container wrapper
 		"display": flex,
-		"content": toggleSettings,
-		"background": c_black,
+		"content": array_concat(toggleSettings, []),
+		"background": make_color_rgb(12, 12, 12),
 	}
 	
+	//assign subcontainers to the main (the sidebar) container
 	content = [
-		settings,
+		settings,	//the settings wrapper
 	]
 }

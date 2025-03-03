@@ -32,12 +32,10 @@ function draw_container(container, tx = 0, ty = 0){
 		}
 	}
 	
-	var blend = gpu_get_blendmode();
 	var bFont = draw_get_font();
-	
 
 	draw_set_alpha(container.transparency);
-	if !(container.background < 0) draw_rectangle_color(container.tx, container.ty, container.tx + container.twidth - 1, container.ty + container.theight - 1, container.background, container.background, container.background, container.background, false);
+	if (container.background > -1) draw_rectangle_color(container.tx, container.ty, container.tx + container.twidth - 1, container.ty + container.theight - 1, container.background, container.background, container.background, container.background, false);
 	draw_set_alpha(bAlpha);
 
 	draw_set_font(container.font);
@@ -88,22 +86,17 @@ function draw_container(container, tx = 0, ty = 0){
 		switch (container.direction){
 		case column:
 			ty += next.height;
+			if (container.twidth < next.width) container.twidth = next.width;
 			break;
 		case row:
 			tx += next.width;
+			if (container.theight < next.height) container.theight = next.height;
 			break;
 		}
 	}
 	
-	gpu_set_blendmode(blend);
-	
-	if (container.display == flex){
-		container.twidth = tx - startx;
-		container.theight = ty - starty;
-	
-		container.twidth = max(container.twidth, string_width(container.text) * txtScale);
-		container.theight = max(container.theight, string_height(container.text) * txtScale);
-	}
+	container.twidth = max(container.twidth, tx - startx, string_width(container.text) * txtScale);
+	container.theight = max(container.theight, ty - starty, string_height(container.text) * txtScale);
 	
 	gpu_set_scissor(scissor);
 	draw_set_font(bFont);
