@@ -12,7 +12,7 @@ function button(width, height, text) constructor{
 	background = c_black;
 	
 	onClick = function(){
-		show_message("hui")
+		
 	}
 	
 	onHold = function(){

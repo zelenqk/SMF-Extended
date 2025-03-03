@@ -26,7 +26,6 @@ function draw_container(container, tx = 0, ty = 0){
 	}
 	
 	var blend = gpu_get_blendmode();
-	container.step();
 	
 	draw_set_alpha(container.transparency);
 	if (container.background >= 0) draw_rectangle_color(container.tx, container.ty, container.tx + container.width - 1, container.ty + container.height - 1, container.background, container.background, container.background, container.background, false);
@@ -83,6 +82,8 @@ function draw_container(container, tx = 0, ty = 0){
 		}
 	}
 	
+	container.step();
+
 	gpu_set_blendmode(blend);
 	
 	if (container.display == flex){
