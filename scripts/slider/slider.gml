@@ -7,9 +7,13 @@ function slider(width, height, knobStyle = {}){
 	vertical = (height > width);
 	value = 0;
 	
+	knob = knobStyle;
+	
+	content = [knob];
+	
 	step = function(){
 		if (hover){
-			if (mouse_check_button_pressed(mb_any)){
+			if (mouse_check_button(mb_any)){
 				knob.tx = device_mouse_x_to_gui(mouse) * !vertical;	
 				knob.ty = device_mouse_y_to_gui(mouse) * vertical;
 				

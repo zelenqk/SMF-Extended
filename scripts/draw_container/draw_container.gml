@@ -11,10 +11,7 @@ function draw_container(container, tx = 0, ty = 0){
 	container.tx = tx + container.offsetX + container.marginLeft;
 	container.ty = ty + container.offsetY + container.marginTop;
 	
-	if (container.display != flex){
-		container.twidth = container.width;
-		container.theight = container.height;
-	}else{
+	if (container.display == flex){
 		container.width = container.twidth;
 		container.height = container.theight;	
 	}
@@ -79,25 +76,10 @@ function draw_container(container, tx = 0, ty = 0){
 	tx = startx;
 	ty = starty;
 	
-	for(var i = 0; i < array_length(container.content); i++){
-		container.content[i].boundary = container.boundary;
-		container.content[i].hidden = (container.overflow == fa_hidden or container.hidden);
-		container.content[i].child = true;
-		container.content[i].parent = container;
+	var t = draw_element(tx, ty, container, container.content);
 		
-		var next = draw_container(container.content[i], tx, ty);
-		
-		switch (container.direction){
-		case column:
-			ty += next.height;
-			if (container.twidth < next.width) container.twidth = next.width;
-			break;
-		case row:
-			tx += next.width;
-			if (container.theight < next.height) container.theight = next.height;
-			break;
-		}
-	}
+	tx = t.tx;
+	ty = t.ty;
 		
 	draw_set_font(container.font);
 	container.step();
@@ -127,7 +109,56 @@ function draw_container(container, tx = 0, ty = 0){
 	draw_set_font(bFont);
 	
 	return {
-		"width": container.twidth + container.marginLeft + container.marginRight,	
-		"height": container.theight + container.marginTop + container.marginBottom,	
+		"width": container.width + container.marginLeft + container.marginRight,	
+		"height": container.height + container.marginTop + container.marginBottom,	
 	}
+}
+
+function draw_element(tx, ty, container, element){
+	var hspacing = 0;
+	var vspacing = 0;
+	
+	switch (container.alignItems){
+	case fa_spacebetween:
+		hspacing = (container.width - container.twidth) / (is_array(content) ? array_length(content) : 1);
+		break;
+	}
+	
+	tx += hspacing;
+	ty += vspacing;
+	
+	
+	if (is_array(element)) {
+		var elmN = array_length(element);
+		for (var i = 0; i < elmN; i++) {
+			var t = draw_element(tx, ty, container, element[i]);
+			if (t != undefined) {
+				if (container.direction == row){
+					tx = t.tx;
+				}else{
+					ty = t.ty;
+				}
+			}
+		}
+	}else{
+		element.boundary = container.boundary;
+		element.hidden = (container.overflow == fa_hidden or container.hidden);
+		element.child = true;
+		element.parent = container;
+
+		var next = draw_container(element, tx, ty);
+
+		switch (container.direction) {
+		case column:
+			ty += next.height;
+			if (container.twidth < next.width) container.twidth = next.width;
+			break;
+		case row:
+			tx += next.width;
+			if (container.theight < next.height) container.theight = next.height;
+			break;
+		}
+	}
+	
+	return {"tx": tx, "ty": ty};
 }

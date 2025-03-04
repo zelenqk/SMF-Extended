@@ -73,16 +73,17 @@ function editor_sidebar() constructor{
 		"display": flex,
 		"text": "Toggle All",
 		"toggle": toggleSettings,
+		"settingsN": array_length(toggleSettings),
 		"value": true,
 		"step": function(){
 			value = true;
-			for(var i = 1; i < array_length(toggle); i++){
+			for(var i = 0; i < settingsN; i++){
 				if (toggle[i].value == false) value = false;	
 			}
 			
 			if (hover){
 				if (device_mouse_check_button_pressed(mouse, mb_any)){
-					for(var i = 1; i < array_length(toggle); i++){
+					for(var i = 0; i < settingsN; i++){
 						toggle[i].value = !value;	
 					}
 				}
@@ -94,12 +95,13 @@ function editor_sidebar() constructor{
 	
 	settingsHeader.content[1] = toggleAll;
 	
-	array_insert(toggleSettings, 0, settingsHeader);
-	
 	settings = {	//settings container wrapper
 		"display": flex,
-		"content": array_concat(toggleSettings, []),
 		"background": make_color_rgb(12, 12, 12),
+		"content": [
+			settingsHeader,
+			toggleSettings,
+		]
 	}
 	
 	//assign subcontainers to the main (the sidebar) container
