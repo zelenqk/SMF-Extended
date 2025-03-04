@@ -6,9 +6,8 @@ function editor_sidebar() constructor{
 	background = c_dkgray;
 	
 	//prepare some presets
-	var scale = (width / sprite_get_width(sToggle));
-	var toggleButton = new button(round(sprite_get_width(sToggle) * scale), round(sprite_get_height(sToggle) * scale), "Toggle ", fa_left);
-	toggleButton.textOffsetX += 6 * scale;
+	var toggleButton = new button(width, sprite_get_height(sToggle) * 2, "Toggle ", fa_left);
+	toggleButton.textOffsetX += 6;
 	toggleButton.timer = 0;
 	toggleButton.font = fntMain;
 	toggleButton.value = true;
@@ -30,7 +29,17 @@ function editor_sidebar() constructor{
 		alpha = 1;
 	}
 	toggleButton.onStep = function(){
-		draw_sprite_stretched(sToggle, value, tx, ty, width, height);	
+		var sprW = sprite_get_width(sToggle) * 2;
+		var w = width - (sprW * 2)
+		
+		var a = draw_get_alpha();
+		var selected = (value * 3);
+		
+		draw_sprite_ext(sToggle, selected + 0, tx, ty, 2, 2, 0, c_white, a);
+		draw_sprite_ext(sToggle, selected + 2, tx + sprW + w, ty, 2, 2, 0, c_white, a);
+		
+		draw_sprite_stretched_ext(sToggle, selected + 1, tx + sprW, ty, w, sprite_get_height(sToggle) * 2, c_white, a);
+		
 	};
 	toggleButton.fontEffects = {
 		"outlineEnable": true,
@@ -46,6 +55,7 @@ function editor_sidebar() constructor{
 		"font": fntMain,
 		"width": width,
 		"height": 32,
+		"textOffsetX": 6,
 		"fontSize": 24,
 		"alignItems": fa_right,
 		"justifyContent": fa_center,
@@ -65,26 +75,57 @@ function editor_sidebar() constructor{
 	toggleSettings[9].text = "Draw rig";
 	
 	var toggleAll = {
-		"display": flex,
 		"text": "Toggle All",
 		"toggle": toggleSettings,
 		"settingsN": array_length(toggleSettings),
+		"textOffsetX": 3,
+		"font": fntMain,
+		"padding": 2,
+		"background": -1,
+		"display": flex,
 		"value": true,
 		"step": function(){
 			value = true;
+			
 			for(var i = 0; i < settingsN; i++){
 				if (toggle[i].value == false) value = false;	
 			}
 			
 			if (hover){
+				transparency = 0.85
+				
 				if (device_mouse_check_button_pressed(mouse, mb_any)){
 					for(var i = 0; i < settingsN; i++){
 						toggle[i].value = !value;	
 					}
 				}
+				
+				if (device_mouse_check_button(mouse, mb_any)){
+					transparency = 0.5
+				}
+				
+			}else{
+				transparency = 1;
 			}
 			
-			color = c_white * value;
+			var sprW = sprite_get_width(sToggle);
+			var sprH = sprite_get_height(sToggle);
+			
+			var scale = height / sprH;
+			sprW *= scale;
+			sprH *= scale;
+			
+			var w = width - (sprW * 2);
+
+			paddingRight = sprW;
+			
+			var a = draw_get_alpha();
+			var selected = (value * 3);
+			
+			draw_sprite_ext(sToggle, selected + 0, tx, ty, scale, scale, 0, c_white, a);
+			draw_sprite_ext(sToggle, selected + 2, tx + sprW + w, ty, scale, scale, 0, c_white, a);
+			
+			draw_sprite_stretched_ext(sToggle, selected + 1, tx + sprW, ty, w, height, c_white, a);
 		}
 	}
 	

@@ -38,6 +38,12 @@ baseContainer = {
 	"marginLeft": 0,
 	"marginRight": 0,
 	
+	//padding
+	"paddingTop": 0,
+	"paddingBottom": 0,
+	"paddingLeft": 0,
+	"paddingRight": 0,
+	
 	
 	//max/min size
 	"maxWidth": infinity,
@@ -83,6 +89,7 @@ baseContainer = {
 		
 	},
 	"content": [],
+	"baked": true,
 }
 
 baseContainerNames = variable_struct_get_names(baseContainer);
@@ -124,6 +131,20 @@ function bake_container(container){
 			container.marginBottom = container.margin;
 			container.marginLeft = container.margin;
 			container.marginRight = container.margin;
+			break;
+		case "paddingH":
+			container.paddingLeft = container.paddingH;
+			container.paddingRight = container.paddingH;
+			break;
+		case "paddingV":
+			container.paddingTop = container.paddingV;
+			container.paddingBottom = container.paddingV;
+			break;
+		case "padding":
+			container.paddingTop = container.padding;
+			container.paddingBottom = container.padding;
+			container.paddingLeft = container.padding;
+			container.paddingRight = container.padding;
 			break;
 		}	
 	}

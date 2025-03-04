@@ -12,14 +12,17 @@ function draw_container(container, tx = 0, ty = 0){
 	container.ty = ty + container.offsetY + container.marginTop;
 	
 	if (container.display == flex){
-		container.width = container.twidth;
-		container.height = container.theight;	
+		container.width = container.twidth + (container.paddingLeft + container.paddingRight);
+		container.height = container.theight + (container.paddingTop + container.paddingBottom);	
 	
 		container.twidth = max(container.twidth, container.minWidth);
 		container.theight = max(container.theight, container.minHeight);
 		
 		container.twidth = min(container.twidth, container.maxWidth);
 		container.theight = min(container.theight, container.maxHeight);
+	}else{
+		container.twidth += (container.paddingLeft + container.paddingRight)	
+		container.theight += (container.paddingTop + container.paddingBottom)	
 	}
 	
 	if (container.hidden == false){
@@ -27,7 +30,7 @@ function draw_container(container, tx = 0, ty = 0){
 			"x": container.tx,
 			"y": container.ty,
 			"width": container.width,
-			"height": container.height,
+			"height": container.height
 		}
 	}
 	
@@ -36,9 +39,9 @@ function draw_container(container, tx = 0, ty = 0){
 	draw_set_alpha(container.transparency);
 	if (container.background > -1) draw_rectangle_color(container.tx, container.ty, container.tx + container.width - 1, container.ty + container.height - 1, container.background, container.background, container.background, container.background, false);
 	
-	var startx = tx;
-	var starty = ty;
-	
+	var startx = tx + container.paddingLeft;
+	var starty = ty + container.paddingTop;
+
 	var scissor = gpu_get_scissor();
 	if (container.overflow == fa_hidden){
 		if (container.hidden){
@@ -93,7 +96,7 @@ function draw_container(container, tx = 0, ty = 0){
 	draw_set_halign(container.halign);
 	draw_set_valign(container.valign);
 	
-	draw_text_transformed_color(container.tx + container.textOffsetX, container.ty + container.textOffsetY,
+	draw_text_transformed_color(container.tx + container.textOffsetX + container.paddingLeft, container.ty + container.textOffsetY + container.paddingTop,
 								container.text, txtScale, txtScale, 0,
 								container.color, container.color, container.color, container.color, container.alpha);
 	
@@ -101,8 +104,8 @@ function draw_container(container, tx = 0, ty = 0){
 	draw_set_valign(bvalign);
 	if (container.font != -1) font_enable_effects(container.font, false, resetFontEffects);
 	
-	container.twidth = max(container.twidth, tx - startx, string_width(container.text) * txtScale);
-	container.theight = max(container.theight, ty - starty, string_height(container.text) * txtScale);
+	container.twidth = max(container.twidth, tx - startx, string_width(container.text) * txtScale)
+	container.theight = max(container.theight, ty - starty, string_height(container.text) * txtScale)
 	
 	gpu_set_scissor(scissor);
 	draw_set_font(bFont);
@@ -121,7 +124,7 @@ function draw_element(tx, ty, container, element){
 		
 		switch (container.alignItems){
 		case fa_spacebetween:
-			hspacing = (container.width - container.twidth) / (array_length(element));
+			hspacing = (container.width - container.twidth) / (array_length(element) - 1);
 			break;
 		}
 
