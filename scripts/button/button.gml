@@ -57,12 +57,12 @@ function button(width, height, text, halign = fa_center, valign = fa_center) con
 		if (hover){
 			onHover();
 			
-			if (mouse_check_button_pressed(mb_any)){
+			if (device_mouse_check_button_pressed(mouse, mb_any)){
 				value = !value;
-				onClick();
+				onClick(mouse);
 			}
 			
-			if (mouse_check_button(mb_any)) onHold();
+			if (device_mouse_check_button(mouse, mb_any)) onHold(mouse);
 		}else ifNot();
 		
 		onStep();

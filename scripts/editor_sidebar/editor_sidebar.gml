@@ -42,12 +42,19 @@ function editor_sidebar() constructor{
 	//create settings wrapper
 	var settingsHeader = {
 		"background": noone,
-		"text": "Settings",
-		"textOffsetX": 3,
+		"direction": row,
 		"marginV": 4,
-		"fontSize": 24,
 		"font": fntMain,
 		"display": flex,
+		"content": [{
+			"background": noone,
+			"direction": row,
+			"textOffsetX": 3,
+			"fontSize": 24,
+			"text": "Settings",
+			"font": fntMain,
+			"display": flex,	
+		}]
 	}
 	
 	var toggleSettings = copy_style(toggleButton, 10);
@@ -61,6 +68,31 @@ function editor_sidebar() constructor{
 	toggleSettings[7].text = "Draw node indices";
 	toggleSettings[8].text = "Node perspective";
 	toggleSettings[9].text = "Draw rig";
+	
+	var toggleAll = {
+		"display": flex,
+		"text": "Toggle All",
+		"toggle": toggleSettings,
+		"value": true,
+		"step": function(){
+			value = true;
+			for(var i = 1; i < array_length(toggle); i++){
+				if (toggle[i].value == false) value = false;	
+			}
+			
+			if (hover){
+				if (device_mouse_check_button_pressed(mouse, mb_any)){
+					for(var i = 1; i < array_length(toggle); i++){
+						toggle[i].value = !value;	
+					}
+				}
+			}
+			
+			color = c_white * value;
+		}
+	}
+	
+	settingsHeader.content[1] = toggleAll;
 	
 	array_insert(toggleSettings, 0, settingsHeader);
 	

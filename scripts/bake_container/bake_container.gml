@@ -1,3 +1,7 @@
+//align/justify
+#macro fa_spacebetween 12
+#macro fa_spacearound 14
+
 
 //display
 #macro fixed 0
@@ -25,11 +29,15 @@ baseContainer = {
 	"display": fixed,
 	"draw": true,
 	
+	"justifyContent": fa_none,
+	"alignItems": fa_none,
+	
 	//margin
 	"marginTop": 0,
 	"marginBottom": 0,
 	"marginLeft": 0,
 	"marginRight": 0,
+	
 	
 	//max/min size
 	"maxWidth": infinity,
@@ -67,7 +75,10 @@ baseContainer = {
 	"cookie": noone,
 	
 	//functionality properties
+	"parent": self,
+	"child": false,
 	"hover": false,
+	"mouse": noone,
 	"step": function(){
 		
 	},

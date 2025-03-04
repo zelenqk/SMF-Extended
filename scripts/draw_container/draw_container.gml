@@ -14,6 +14,9 @@ function draw_container(container, tx = 0, ty = 0){
 	if (container.display != flex){
 		container.twidth = container.width;
 		container.theight = container.height;
+	}else{
+		container.width = container.twidth;
+		container.height = container.theight;	
 	}
 	
 	container.twidth = max(container.twidth, container.minWidth);
@@ -52,14 +55,35 @@ function draw_container(container, tx = 0, ty = 0){
 		gpu_set_scissor(container.boundary.x, container.boundary.y, container.boundary.width, container.boundary.height);
 	}
 	
-	container.hover = (mouse_in_rectangle(container.boundary.x, container.boundary.y, container.boundary.width, container.boundary.height));
-
+	container.mouse = (mouse_in_rectangle(container.boundary.x, container.boundary.y, container.boundary.width, container.boundary.height));
+	container.hover = (container.mouse > -1);
+	
+	switch(container.alignItems){
+	case fa_center:
+		startx += (container.width / 2) - container.twidth / 2;
+		break;
+	case fa_right:
+		startx += (container.width) - container.twidth;
+		break;
+	}
+	
+	switch(container.justifyContent){
+	case fa_center:
+		startx += (container.height / 2) - container.theight / 2;
+		break;
+	case fa_bottom:
+		startx += (container.height) - container.theight;
+		break;
+	}
+	
 	tx = startx;
 	ty = starty;
 	
 	for(var i = 0; i < array_length(container.content); i++){
 		container.content[i].boundary = container.boundary;
 		container.content[i].hidden = (container.overflow == fa_hidden or container.hidden);
+		container.content[i].child = true;
+		container.content[i].parent = container;
 		
 		var next = draw_container(container.content[i], tx, ty);
 		

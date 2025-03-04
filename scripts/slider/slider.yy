@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"slider",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"slider",
+  "parent":{
+    "name":"presets",
+    "path":"folders/JUI/presets.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
