@@ -14,28 +14,27 @@ function draw_container(container, tx = 0, ty = 0){
 	if (container.display == flex){
 		container.width = container.twidth;
 		container.height = container.theight;	
+	
+		container.twidth = max(container.twidth, container.minWidth);
+		container.theight = max(container.theight, container.minHeight);
+		
+		container.twidth = min(container.twidth, container.maxWidth);
+		container.theight = min(container.theight, container.maxHeight);
 	}
-	
-	container.twidth = max(container.twidth, container.minWidth);
-	container.theight = max(container.theight, container.minHeight);
-	
-	container.twidth = min(container.twidth, container.maxWidth);
-	container.theight = min(container.theight, container.maxHeight);
-
 	
 	if (container.hidden == false){
 		container.boundary = {
 			"x": container.tx,
 			"y": container.ty,
-			"width": container.twidth,
-			"height": container.theight,
+			"width": container.width,
+			"height": container.height,
 		}
 	}
 	
 	var bFont = draw_get_font();
 
 	draw_set_alpha(container.transparency);
-	if (container.background > -1) draw_rectangle_color(container.tx, container.ty, container.tx + container.twidth - 1, container.ty + container.theight - 1, container.background, container.background, container.background, container.background, false);
+	if (container.background > -1) draw_rectangle_color(container.tx, container.ty, container.tx + container.width - 1, container.ty + container.height - 1, container.background, container.background, container.background, container.background, false);
 	
 	var startx = tx;
 	var starty = ty;
@@ -45,8 +44,8 @@ function draw_container(container, tx = 0, ty = 0){
 		if (container.hidden){
 			container.boundary.x = max(container.tx, container.boundary.x);
 			container.boundary.y = max(container.ty, container.boundary.y);
-			container.boundary.width = min(container.tx + container.twidth, container.boundary.x + container.boundary.width) - container.boundary.tx;	
-			container.boundary.height = min(container.ty + container.theight, container.boundary.y + container.boundary.height) - container.boundary.ty;
+			container.boundary.width = min(container.tx + container.width, container.boundary.x + container.boundary.width) - container.boundary.tx;	
+			container.boundary.height = min(container.ty + container.height, container.boundary.y + container.boundary.height) - container.boundary.ty;
 		}
 		
 		gpu_set_scissor(container.boundary.x, container.boundary.y, container.boundary.width, container.boundary.height);
@@ -66,10 +65,10 @@ function draw_container(container, tx = 0, ty = 0){
 	
 	switch(container.justifyContent){
 	case fa_center:
-		startx += (container.height / 2) - container.theight / 2;
+		starty += (container.height / 2) - container.theight / 2;
 		break;
 	case fa_bottom:
-		startx += (container.height) - container.theight;
+		starty += (container.height) - container.theight;
 		break;
 	}
 	
@@ -115,30 +114,22 @@ function draw_container(container, tx = 0, ty = 0){
 }
 
 function draw_element(tx, ty, container, element){
-	var hspacing = 0;
-	var vspacing = 0;
-	
-	switch (container.alignItems){
-	case fa_spacebetween:
-		hspacing = (container.width - container.twidth) / (is_array(content) ? array_length(content) : 1);
-		break;
-	}
-	
-	tx += hspacing;
-	ty += vspacing;
-	
-	
 	if (is_array(element)) {
 		var elmN = array_length(element);
+		var hspacing = 0;
+		var vspacing = 0;
+		
+		switch (container.alignItems){
+		case fa_spacebetween:
+			hspacing = (container.width - container.twidth) / (array_length(element));
+			break;
+		}
+
 		for (var i = 0; i < elmN; i++) {
 			var t = draw_element(tx, ty, container, element[i]);
-			if (t != undefined) {
-				if (container.direction == row){
-					tx = t.tx;
-				}else{
-					ty = t.ty;
-				}
-			}
+			
+			tx = t.tx + hspacing;
+			ty = t.ty + vspacing;
 		}
 	}else{
 		element.boundary = container.boundary;

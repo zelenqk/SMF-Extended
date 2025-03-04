@@ -43,18 +43,13 @@ function editor_sidebar() constructor{
 	var settingsHeader = {
 		"background": noone,
 		"direction": row,
-		"marginV": 4,
 		"font": fntMain,
-		"display": flex,
-		"content": [{
-			"background": noone,
-			"direction": row,
-			"textOffsetX": 3,
-			"fontSize": 24,
-			"text": "Settings",
-			"font": fntMain,
-			"display": flex,	
-		}]
+		"width": width,
+		"height": 32,
+		"fontSize": 24,
+		"alignItems": fa_right,
+		"justifyContent": fa_center,
+		"text": "Settings",
 	}
 	
 	var toggleSettings = copy_style(toggleButton, 10);
@@ -93,7 +88,7 @@ function editor_sidebar() constructor{
 		}
 	}
 	
-	settingsHeader.content[1] = toggleAll;
+	settingsHeader.content = toggleAll;
 	
 	settings = {	//settings container wrapper
 		"display": flex,
