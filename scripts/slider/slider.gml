@@ -1,36 +1,73 @@
 #macro defaultKnob {}
 
-function slider(width, height, knobStyle = {}){
+function slider(width, height, defaultValue = 0, knobStyle = defaultKnob) constructor {
 	self.width = width;
 	self.height = height;
 	
 	vertical = (height > width);
-	value = 0;
+	value = defaultValue;
 	
 	knob = knobStyle;
 	
-	content = [knob];
+	var size = (vertical) ? width : height;
+	knob.width = size;
+	knob.height = size;
 	
-	step = function(){
+	background = c_white;
+	content = knob;
+
+	controlling = noone;
+	
+	onStep = function(){
+		
+	}
+	
+	onHover = function(){
+		
+	}
+	
+	onClick = function(){
+		
+	}
+	
+	onHold = function(){
+		
+	}
+
+	step = function() {
+		if (controlling != noone and device_mouse_check_button_released(controlling, mb_any)) controlling = noone;
+		
 		if (hover){
-			if (mouse_check_button(mb_any)){
-				knob.tx = device_mouse_x_to_gui(mouse) * !vertical;	
-				knob.ty = device_mouse_y_to_gui(mouse) * vertical;
-				
-				var val = (vertical) ? knob.ty : knob.tx;
-				var lb = (vertical) ? ty : tx;
-				var ub = (vertical) ? height : width;
-				
-				value = map_value(val, lb, lb + ub, 0, 1);
+			onHover();
+			
+			if (device_mouse_check_button_pressed(mouse, mb_any) and controlling == noone){
+				controlling = mouse;
+				onClick();
 			}
 		}
 		
-		if (vertical){
-			var space = height * value;
-			knob.ty = ty + space;
-		}else{
-			var space = width * value;
-			knob.tx = tx + space;
+		if (controlling != noone) {
+			// Convert mouse position
+			var mousex = device_mouse_x_to_gui(controlling);
+			var mousey = device_mouse_y_to_gui(controlling);
+
+			// Constrain the knob movement
+			if (vertical) {
+				knob.offsetY = clamp(mousey, ty, ty + height - knob.height);
+				value = (knob.offsetY - ty) / (height - knob.height);
+			}else{
+				knob.offsetX = clamp(mousex, tx, tx + width - knob.width);
+				value = (knob.offsetX - tx) / (width - knob.width);
+			}
+			
+			onStep();
 		}
-	}
+
+		// Keep knob in the correct position
+		if (vertical) {
+			knob.offsetY = ty + (height - knob.height) * value;
+		} else {
+			knob.offsetX = tx + (width - knob.width) * value;
+		}
+	};
 }

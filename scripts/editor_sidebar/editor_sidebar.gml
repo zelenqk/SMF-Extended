@@ -80,7 +80,8 @@ function editor_sidebar() constructor{
 		"settingsN": array_length(toggleSettings),
 		"textOffsetX": 3,
 		"font": fntMain,
-		"padding": 2,
+		"paddingH": 6,
+		"paddingV": 3,
 		"background": -1,
 		"display": flex,
 		"value": true,
@@ -131,12 +132,26 @@ function editor_sidebar() constructor{
 	
 	settingsHeader.content = toggleAll;
 	
+	//slider settings
+	var rigOpacitySlider = new slider(width, width / 12, 1);
+	var rigThicknessSlider = new slider(width, width / 12, 0.5);
+	
+	rigOpacitySlider.text = "Rig opacity - 1";
+	
+	rigOpacitySlider.onStep = function(){
+		text = "Rig opacity - " + string(value);	
+	}
+	
+	var sliderSettings = [rigOpacitySlider, rigThicknessSlider];
+	
 	settings = {	//settings container wrapper
 		"display": flex,
 		"background": make_color_rgb(12, 12, 12),
 		"content": [
+			//general settings
 			settingsHeader,
 			toggleSettings,
+			sliderSettings
 		]
 	}
 	

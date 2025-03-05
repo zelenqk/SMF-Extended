@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"copy_struct",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"copy_struct",
+  "parent":{
+    "name":"util",
+    "path":"folders/JUI/util.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

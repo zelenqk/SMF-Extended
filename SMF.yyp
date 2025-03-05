@@ -152,6 +152,7 @@
     {"id":{"name":"cast_ray_plane","path":"scripts/cast_ray_plane/cast_ray_plane.yy",},},
     {"id":{"name":"combine_textures","path":"scripts/combine_textures/combine_textures.yy",},},
     {"id":{"name":"common_add_buttons","path":"scripts/common_add_buttons/common_add_buttons.yy",},},
+    {"id":{"name":"copy_struct","path":"scripts/copy_struct/copy_struct.yy",},},
     {"id":{"name":"copy_styles","path":"scripts/copy_styles/copy_styles.yy",},},
     {"id":{"name":"create_wireframe_cube","path":"scripts/create_wireframe_cube/create_wireframe_cube.yy",},},
     {"id":{"name":"draw_buttons","path":"scripts/draw_buttons/draw_buttons.yy",},},
