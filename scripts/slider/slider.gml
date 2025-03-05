@@ -7,7 +7,7 @@ function slider(width, height, defaultValue = 0, knobStyle = defaultKnob) constr
 	vertical = (height > width);
 	value = defaultValue;
 	
-	knob = knobStyle;
+	knob = copy_struct(knobStyle);
 	
 	var size = (vertical) ? width : height;
 	knob.width = size;
@@ -17,6 +17,7 @@ function slider(width, height, defaultValue = 0, knobStyle = defaultKnob) constr
 	content = knob;
 
 	controlling = noone;
+	renewKnob = false;
 	
 	onStep = function(){
 		
@@ -35,6 +36,12 @@ function slider(width, height, defaultValue = 0, knobStyle = defaultKnob) constr
 	}
 
 	step = function() {
+		if (renewKnob == false){
+			knob = copy_struct(knob);
+			content = knob;
+			renewKnob = true;
+		}
+		
 		if (controlling != noone and device_mouse_check_button_released(controlling, mb_any)) controlling = noone;
 		
 		if (hover){
@@ -59,8 +66,6 @@ function slider(width, height, defaultValue = 0, knobStyle = defaultKnob) constr
 				knob.offsetX = clamp(mousex, tx, tx + width - knob.width);
 				value = (knob.offsetX - tx) / (width - knob.width);
 			}
-			
-			onStep();
 		}
 
 		// Keep knob in the correct position
@@ -69,5 +74,7 @@ function slider(width, height, defaultValue = 0, knobStyle = defaultKnob) constr
 		} else {
 			knob.offsetX = tx + (width - knob.width) * value;
 		}
+		
+		onStep();
 	};
 }

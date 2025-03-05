@@ -67,6 +67,8 @@ baseContainer = {
 	"font": -1,
 	"fontSize": 20,
 	"fontEffects": {},
+	"alignText": fa_left,
+	"justifyText": fa_top,
 	
 	///////effects properties
 	

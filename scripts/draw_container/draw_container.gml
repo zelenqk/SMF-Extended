@@ -96,7 +96,27 @@ function draw_container(container, tx = 0, ty = 0){
 	draw_set_halign(container.halign);
 	draw_set_valign(container.valign);
 	
-	draw_text_transformed_color(container.tx + container.textOffsetX + container.paddingLeft, container.ty + container.textOffsetY + container.paddingTop,
+	var textx = container.tx + container.textOffsetX + container.paddingLeft;
+	var texty = container.ty + container.textOffsetY + container.paddingTop;
+	
+	switch (container.alignText){
+	case fa_center:
+		textx += (container.width / 2) - ((string_width(container.text) * txtScale) / 2)
+		break;
+	case fa_right:
+		textx += (container.width) - ((string_width(container.text) * txtScale))
+		break;
+	}
+	
+	switch (container.justifyText){
+	case fa_center:
+		texty += (container.height / 2) - ((string_height(container.text) * txtScale) / 2)
+		break;
+	case fa_bottom:
+		texty += (container.height) - ((string_height(container.text) * txtScale))
+	}
+	
+	draw_text_transformed_color(textx, texty,
 								container.text, txtScale, txtScale, 0,
 								container.color, container.color, container.color, container.color, container.alpha);
 	

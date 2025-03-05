@@ -133,16 +133,9 @@ function editor_sidebar() constructor{
 	settingsHeader.content = toggleAll;
 	
 	//slider settings
-	var rigOpacitySlider = new slider(width, width / 12, 1);
-	var rigThicknessSlider = new slider(width, width / 12, 0.5);
+	var sliderStyle = new slider(width, width / 12);
 	
-	rigOpacitySlider.text = "Rig opacity - 1";
-	
-	rigOpacitySlider.onStep = function(){
-		text = "Rig opacity - " + string(value);	
-	}
-	
-	var sliderSettings = [rigOpacitySlider, rigThicknessSlider];
+	var sliderSettings = copy_style(sliderStyle, 2);
 	
 	settings = {	//settings container wrapper
 		"display": flex,
